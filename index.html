@@ -22,19 +22,25 @@
         Let fate choose your kit. Roll a random loadout and drag it into the swamp.
       </p>
 
-      <!-- Controls -->
-      <div class="mt-6 flex flex-wrap items-center justify-center gap-3">
-        <button id="qm-btn" type="button" class="rounded-md border border-zinc-700 bg-zinc-800 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-zinc-300 hover:border-zinc-500">
-          Quartermaster: OFF (5 Slots)
-        </button>
+      <!-- Controls & Status Container -->
+      <div class="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-zinc-800/80 pb-6">
+        <!-- Vänster sida: Slot-räknare -->
+        <div class="flex items-center">
+          <span class="rounded-md border border-zinc-800 bg-zinc-900/60 px-4 py-2 text-xs text-zinc-400 shadow-sm">
+            Used Slots: <span id="slot-counter" class="font-bold text-zinc-100">5 / 5</span>
+          </span>
+        </div>
 
-        <button id="weapons-btn" type="button" class="rounded-md border border-zinc-700 bg-zinc-800 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-zinc-300 hover:border-zinc-500">
-          Only Weapons: OFF
-        </button>
+        <!-- Höger sida: Knappar samlade -->
+        <div class="flex flex-wrap items-center justify-center sm:justify-end gap-3">
+          <button id="qm-btn" type="button" class="rounded-md border border-zinc-700 bg-zinc-800 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-zinc-300 transition-all hover:border-zinc-500 active:scale-95">
+            Quartermaster: OFF (5 Slots)
+          </button>
 
-        <span class="rounded-md border border-zinc-800 bg-zinc-900/60 px-3 py-2 text-xs text-zinc-400">
-          Used Slots: <span id="slot-counter" class="font-bold text-zinc-100">5 / 5</span>
-        </span>
+          <button id="weapons-btn" type="button" class="rounded-md border border-zinc-700 bg-zinc-800 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-zinc-300 transition-all hover:border-zinc-500 active:scale-95">
+            Only Weapons: OFF
+          </button>
+        </div>
       </div>
     </header>
 
