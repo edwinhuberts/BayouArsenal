@@ -170,19 +170,8 @@ const weapons = [
 
 const MELEE_TOOLS = ["Knuckle Knife", "Duster", "Knife", "Heavy Knife", "Throwing Knives", "Throwing Axes", "Throwing Spear"];
 const MEDICAL_TOOLS = ["First Aid Kit"];
-const OTHER_TOOLS = ["Flare Pistol", "Fusees", "Alert Trip Mines", "Concertina Trip Mines", "Poison Trip Mines", "Decoys", "Blank Fire Decoys", "Choke Bombs", "Spyglass", "Electric Lamp"];
+const OTHER_TOOLS = ["Flare Pistol", "Fusees", "Alert Trip Mines", "Concertina Trip Mines", "Poison Trip Mines", "Decoys", "Blank Fire Decoys", "Choke Bombs", "Spyglass"];
 const CONSUMABLES = ["Weak Vitality Shot", "Vitality Shot", "Weak Stamina Shot", "Stamina Shot", "Weak Antidote Shot", "Antidote Shot", "Regeneration Shot", "Dynamite Stick", "Waxed Dynamite Stick", "Dynamite Bundle", "Big Dynamite Bundle", "Frag Bomb", "Liquid Fire Bomb", "Fire Bomb", "Hellfire Bomb", "Poison Bomb", "Flash Bomb", "Concertina Bomb", "Sticky Bomb", "Ammo Box", "Tool Box", "Beetle (Stalker)", "Beetle (Fire)"];
-
-const MEME_LOADOUTS = [
-  { primary: "Sparks LRR", secondary: "Sparks Pistol", note: "Sparks Poison Overload", ammoOverride: "Poison Ammo" },
-  { primary: "Bomb Lance", secondary: "Derringer Penny Shot", note: "The Swamp Executioner" },
-  { primary: "Crossbow", secondary: "Hand Crossbow", note: "Robin Hood Mode" },
-  { primary: "Mosin-Nagant M1891 Avtomat", secondary: "Caldwell Conversion Uppercut", note: "Spray & Pray" },
-  { primary: "Baseball Bat", secondary: "Cavalry Saber", note: "Gangs of New York" },
-  { primary: "Romero 77", secondary: "Romero 77 Handcannon", note: "Double Slug Surprise", ammoOverride: "Slug Ammo" },
-  { primary: "Hunting Bow", secondary: "Katana", note: "The Silent Samurai" },
-  { primary: "Nitro Express Rifle", secondary: "Dolch 96", note: "Bank Breaker" }
-];
 
 // --- STATE ---
 let quartermaster = false;
@@ -195,7 +184,7 @@ function getRandomItem(arr) {
 }
 
 function getAmmoDisplay(weapon) {
-  // 50% chons för custom ammo om vapnet stödjer det
+  // 50% chans för custom ammo om vapnet stödjer det
   if (weapon.custom && weapon.custom.length > 0 && Math.random() < 0.5) {
     const chosenCustom = getRandomItem(weapon.custom);
     return `${weapon.ammo} (${chosenCustom})`;
@@ -232,18 +221,18 @@ function toggleOnlyWeapons() {
 
 function rollWeapons() {
   const maxSlots = quartermaster ? 6 : 5;
-  let primary = getRandomItem(WEAPONS);
-  let availableSlotsForSecondary = maxSlots - primary.slots;
+  let primary = getRandomItem(weapons);
+  let availableSlotsForSecondary = maxSlots - primary.slot;
 
-  let validSecondaries = WEAPONS.filter(w => w.slots <= availableSlotsForSecondary);
-  let secondary = validSecondaries.length > 0 ? getRandomItem(validSecondaries) : WEAPONS[0];
+  let validSecondaries = weapons.filter(w => w.slot <= availableSlotsForSecondary);
+  let secondary = validSecondaries.length > 0 ? getRandomItem(validSecondaries) : weapons[0];
 
   // Rendera Primär
   const pName = document.getElementById("primary-name");
   const pSlot = document.getElementById("primary-slot");
   const pAmmo = document.getElementById("primary-ammo");
   if (pName) pName.textContent = primary.name;
-  if (pSlot) pSlot.textContent = `${primary.slots}-SLOT`;
+  if (pSlot) pSlot.textContent = `${primary.slot}-SLOT`;
   if (pAmmo) pAmmo.textContent = getAmmoDisplay(primary);
 
   // Rendera Sekundär
@@ -251,17 +240,17 @@ function rollWeapons() {
   const sSlot = document.getElementById("secondary-slot");
   const sAmmo = document.getElementById("secondary-ammo");
   if (sName) sName.textContent = secondary.name;
-  if (sSlot) sSlot.textContent = `${secondary.slots}-SLOT`;
+  if (sSlot) sSlot.textContent = `${secondary.slot}-SLOT`;
   if (sAmmo) sAmmo.textContent = getAmmoDisplay(secondary);
 
   // Uppdatera slot-räknare
   const slotCounter = document.getElementById("slot-counter");
   if (slotCounter) {
-    slotCounter.textContent = `${primary.slots + secondary.slots} / ${maxSlots}`;
+    slotCounter.textContent = `${primary.slot + secondary.slot} / ${maxSlots}`;
   }
 }
 
 function rollGear() {
   if (onlyWeapons) return;
-
-  const gear
+  // Gear roll logic...
+}
