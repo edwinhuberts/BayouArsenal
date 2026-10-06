@@ -96,7 +96,15 @@
       </button>
     </div>
   </div>
+<!-- Footer -->
+    <footer class="mt-16 border-t border-zinc-800/80 pt-6 text-center text-xs text-zinc-500">
+      <p>&copy; <span id="year"></span> edwinhuberts. All rights reserved.</p>
+      <p class="mt-1 text-[11px] text-zinc-600">
+        Bayou Arsenal is a fan-made tool for Hunt: Showdown 1896.
+      </p>
+    </footer>
+  </div>
 
-  <script src="script.js"></script>
+  <script src="script.js">document.getElementById("year").textContent = new Date().getFullYear();</script>
 </body>
 </html>
