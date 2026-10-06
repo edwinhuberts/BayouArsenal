@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bayou Arsenal — Hunt: Showdown 1896 Loadout Randomizer</title>
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-zinc-950 text-zinc-100 min-h-screen texture-grain">
+
+  <div class="mx-auto max-w-5xl px-4 py-12 sm:py-16">
+    <header class="text-center">
+      <div class="text-[11px] font-semibold uppercase tracking-[0.35em] text-amber-500/80">
+        Hunt: Showdown 1896
+      </div>
+      <h1 class="font-bold text-glow-brass mt-3 text-4xl text-amber-400 sm:text-5xl">
+        Bayou Arsenal
+      </h1>
+      <p class="mx-auto mt-3 max-w-md text-sm text-zinc-400">
+        Let fate choose your kit. Roll a random loadout and drag it into the swamp.
+      </p>
+
+      <!-- Controls -->
+      <div class="mt-6 flex flex-wrap items-center justify-center gap-3">
+        <button id="qm-btn" type="button" class="rounded-md border border-zinc-700 bg-zinc-800 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-zinc-300 hover:border-zinc-500">
+          Quartermaster: OFF (5 Slots)
+        </button>
+
+        <button id="weapons-btn" type="button" class="rounded-md border border-zinc-700 bg-zinc-800 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-zinc-300 hover:border-zinc-500">
+          Only Weapons: OFF
+        </button>
+
+        <span class="rounded-md border border-zinc-800 bg-zinc-900/60 px-3 py-2 text-xs text-zinc-400">
+          Used Slots: <span id="slot-counter" class="font-bold text-zinc-100">5 / 5</span>
+        </span>
+      </div>
+    </header>
+
+    <!-- Weapons Section -->
+    <div class="mt-10 grid gap-4 sm:grid-cols-2">
+      <!-- Primary Weapon -->
+      <div class="rounded-lg border border-zinc-800 bg-zinc-900/80 p-5 shadow-lg">
+        <div class="text-[11px] font-semibold uppercase tracking-[0.2em] text-zinc-500">Primary Weapon</div>
+        <div class="mt-2 flex items-center justify-between gap-4">
+          <div>
+            <div id="primary-name" class="text-xl font-bold text-zinc-100">---</div>
+            <div class="mt-1.5 flex items-center gap-2 text-xs text-zinc-400">
+              <span id="primary-slots" class="rounded-sm border border-zinc-700 bg-zinc-800 px-1.5 py-0.5 uppercase tracking-wider">- slot</span>
+              <span id="primary-cat">---</span>
+            </div>
+          </div>
+          <img id="primary-img" src="" alt="" class="h-16 w-28 object-contain hidden" />
+        </div>
+      </div>
+
+      <!-- Secondary Weapon -->
+      <div class="rounded-lg border border-zinc-800 bg-zinc-900/80 p-5 shadow-lg">
+        <div class="text-[11px] font-semibold uppercase tracking-[0.2em] text-zinc-500">Secondary Weapon</div>
+        <div class="mt-2 flex items-center justify-between gap-4">
+          <div>
+            <div id="secondary-name" class="text-xl font-bold text-zinc-100">---</div>
+            <div class="mt-1.5 flex items-center gap-2 text-xs text-zinc-400">
+              <span id="secondary-slots" class="rounded-sm border border-zinc-700 bg-zinc-800 px-1.5 py-0.5 uppercase tracking-wider">- slot</span>
+              <span id="secondary-cat">---</span>
+            </div>
+          </div>
+          <img id="secondary-img" src="" alt="" class="h-16 w-28 object-contain hidden" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Items Section -->
+    <div id="equipment-container" class="mt-6">
+      <div class="mb-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-zinc-500 text-center sm:text-left">
+        Equipment Slots (8)
+      </div>
+      <div id="item-grid" class="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-8">
+        <!-- Genereras dynamiskt via script.js -->
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="mt-10 flex flex-wrap justify-center gap-4 text-center">
+      <button id="roll-btn" type="button" class="rounded-md border border-amber-600/40 bg-amber-600 px-8 py-3.5 text-lg font-bold tracking-wide text-zinc-950 shadow-lg hover:bg-amber-500 transition-all active:scale-[0.98]">
+        Roll Loadout
+      </button>
+
+      <button id="meme-btn" type="button" class="rounded-md border border-amber-800/40 bg-zinc-900 px-8 py-3.5 text-lg font-bold tracking-wide text-amber-400 shadow-lg hover:bg-zinc-800 transition-all active:scale-[0.98]">
+        🤡 Roll Meme Loadout
+      </button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
