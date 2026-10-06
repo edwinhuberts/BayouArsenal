@@ -18,9 +18,7 @@ A fast, clean, and responsive loadout randomizer for **Hunt: Showdown 1896**. Le
 ## 🚀 Live Demo
 
 Check out the live app hosted on GitHub Pages:
-👉 **[Play / Open Bayou Arsenal]([https://edwinhuberts.github.io/BayouArsenal/])**
-
-*(Replace the link above with your actual GitHub Pages URL)*
+👉 **[Play / Open Bayou Arsenal](https://edwinhuberts.github.io/BayouArsenal/)**
 
 ---
 
