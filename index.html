@@ -11,36 +11,34 @@
 <body class="bg-zinc-950 text-zinc-100 min-h-screen texture-grain">
 
   <div class="mx-auto max-w-5xl px-4 py-12 sm:py-16">
-    <header class="text-center">
+    <header class="relative text-center mb-8">
+      <!-- Knappar placerade i högerkanten -->
+      <div class="sm:absolute sm:top-0 sm:right-0 flex flex-wrap items-center justify-center sm:justify-end gap-2 mb-6 sm:mb-0">
+        <button id="qm-btn" type="button" class="rounded-md border border-zinc-700 bg-zinc-900/90 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-zinc-300 transition-all hover:border-zinc-500 active:scale-95 shadow-md">
+          Quartermaster: OFF (5 Slots)
+        </button>
+
+        <button id="weapons-btn" type="button" class="rounded-md border border-zinc-700 bg-zinc-900/90 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-zinc-300 transition-all hover:border-zinc-500 active:scale-95 shadow-md">
+          Only Weapons: OFF
+        </button>
+      </div>
+
+      <!-- Huvudrubrik (centrerad i mitten) -->
       <div class="text-[11px] font-semibold uppercase tracking-[0.35em] text-amber-500/80">
         Hunt: Showdown 1896
       </div>
-      <h1 class="font-bold text-glow-brass mt-3 text-4xl text-amber-400 sm:text-5xl">
+      <h1 class="font-bold text-glow-brass mt-2 text-4xl text-amber-400 sm:text-5xl">
         Bayou Arsenal
       </h1>
-      <p class="mx-auto mt-3 max-w-md text-sm text-zinc-400">
+      <p class="mx-auto mt-2 max-w-md text-sm text-zinc-400">
         Let fate choose your kit. Roll a random loadout and drag it into the swamp.
       </p>
 
-      <!-- Controls & Status Container -->
-      <div class="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-zinc-800/80 pb-6">
-        <!-- Vänster sida: Slot-räknare -->
-        <div class="flex items-center">
-          <span class="rounded-md border border-zinc-800 bg-zinc-900/60 px-4 py-2 text-xs text-zinc-400 shadow-sm">
-            Used Slots: <span id="slot-counter" class="font-bold text-zinc-100">5 / 5</span>
-          </span>
-        </div>
-
-        <!-- Höger sida: Knappar samlade -->
-        <div class="flex flex-wrap items-center justify-center sm:justify-end gap-3">
-          <button id="qm-btn" type="button" class="rounded-md border border-zinc-700 bg-zinc-800 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-zinc-300 transition-all hover:border-zinc-500 active:scale-95">
-            Quartermaster: OFF (5 Slots)
-          </button>
-
-          <button id="weapons-btn" type="button" class="rounded-md border border-zinc-700 bg-zinc-800 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-zinc-300 transition-all hover:border-zinc-500 active:scale-95">
-            Only Weapons: OFF
-          </button>
-        </div>
+      <!-- Slot-räknare under rubriken -->
+      <div class="mt-5 flex justify-center">
+        <span class="rounded-md border border-zinc-800 bg-zinc-900/60 px-3.5 py-1.5 text-xs text-zinc-400 shadow-sm">
+          Used Slots: <span id="slot-counter" class="font-bold text-zinc-100">5 / 5</span>
+        </span>
       </div>
     </header>
 
