@@ -184,12 +184,13 @@ function getRandomItem(arr) {
 }
 
 function getAmmoDisplay(weapon) {
+  if (!weapon || !weapon.type) return "STANDARD";
   const customList = CUSTOM_AMMO_TYPES[weapon.type];
   if (customList && customList.length > 0 && Math.random() < 0.5) {
     const chosenCustom = getRandomItem(customList);
     return `${weapon.type.toUpperCase()} (${chosenCustom})`;
   }
-  return weapon.type ? weapon.type.toUpperCase() : "STANDARD";
+  return weapon.type.toUpperCase();
 }
 
 // --- LOGIC ---
@@ -202,6 +203,7 @@ function toggleQuartermaster() {
     qmBtn.classList.toggle("border-amber-500/60", quartermaster);
     qmBtn.classList.toggle("text-amber-400", quartermaster);
   }
+  rollWeapons();
 }
 
 function toggleOnlyWeapons() {
@@ -221,25 +223,37 @@ function toggleOnlyWeapons() {
 
 function rollWeapons() {
   const maxSlots = quartermaster ? 6 : 5;
-  let primary = getRandomItem(weapons);
   
-  // Hitta sekundära vapen som får plats med återstående slots
+  // Välj primärt vapen (max slots - 1 så sekundär får plats)
+  const validPrimaries = weapons.filter(w => w.slot <= maxSlots - 1);
+  let primary = getRandomItem(validPrimaries) || weapons[0];
+  
+  // Välj sekundärt vapen
   let availableSlotsForSecondary = maxSlots - primary.slot;
   let validSecondaries = weapons.filter(w => w.slot <= availableSlotsForSecondary);
   let secondary = validSecondaries.length > 0 ? getRandomItem(validSecondaries) : getRandomItem(weapons.filter(w => w.slot === 1));
 
   // Rendera Primär
-  document.getElementById("primary-name").textContent = primary.name;
-  document.getElementById("primary-slot").textContent = `${primary.slot}-SLOT`;
-  document.getElementById("primary-ammo").textContent = getAmmoDisplay(primary);
+  const pName = document.getElementById("primary-name");
+  const pSlot = document.getElementById("primary-slot");
+  const pAmmo = document.getElementById("primary-ammo");
+  if (pName) pName.textContent = primary.name;
+  if (pSlot) pSlot.textContent = `${primary.slot}-SLOT`;
+  if (pAmmo) pAmmo.textContent = getAmmoDisplay(primary);
 
   // Rendera Sekundär
-  document.getElementById("secondary-name").textContent = secondary.name;
-  document.getElementById("secondary-slot").textContent = `${secondary.slot}-SLOT`;
-  document.getElementById("secondary-ammo").textContent = getAmmoDisplay(secondary);
+  const sName = document.getElementById("secondary-name");
+  const sSlot = document.getElementById("secondary-slot");
+  const sAmmo = document.getElementById("secondary-ammo");
+  if (sName) sName.textContent = secondary.name;
+  if (sSlot) sSlot.textContent = `${secondary.slot}-SLOT`;
+  if (sAmmo) sAmmo.textContent = getAmmoDisplay(secondary);
 
   // Uppdatera slot-räknare
-  document.getElementById("slot-counter").textContent = `${primary.slot + secondary.slot} / ${maxSlots}`;
+  const slotCounter = document.getElementById("slot-counter");
+  if (slotCounter) {
+    slotCounter.textContent = `${primary.slot + secondary.slot} / ${maxSlots}`;
+  }
 }
 
 function rollGear() {
@@ -270,16 +284,22 @@ function rollAll() {
 }
 
 // --- INIT & EVENT LISTENERS ---
-document.addEventListener("DOMContentLoaded", () => {
-  // Koppla klickhändelser till knapparna
-  document.getElementById("roll-btn")?.addEventListener("click", rollAll);
-  document.getElementById("qm-btn")?.addEventListener("click", toggleQuartermaster);
-  document.getElementById("weapons-btn")?.addEventListener("click", toggleOnlyWeapons);
-
-  // Sätt årtal i footer
+function init() {
+  const rollBtn = document.getElementById("roll-btn");
+  const qmBtn = document.getElementById("qm-btn");
+  const weaponsBtn = document.getElementById("weapons-btn");
   const yearElem = document.getElementById("year");
+
+  if (rollBtn) rollBtn.addEventListener("click", rollAll);
+  if (qmBtn) qmBtn.addEventListener("click", toggleQuartermaster);
+  if (weaponsBtn) weaponsBtn.addEventListener("click", toggleOnlyWeapons);
   if (yearElem) yearElem.textContent = new Date().getFullYear();
 
-  // Kör en första slumpning vid start
   rollAll();
-});
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", init);
+} else {
+  init();
+}
