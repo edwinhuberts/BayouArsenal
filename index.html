@@ -10,19 +10,6 @@
 </head>
 <body class="bg-zinc-950 text-zinc-100 min-h-screen texture-grain">
 
-  <div class="mx-auto max-w-5xl px-4 py-12 sm:py-16">
-    <header class="relative text-center mb-8">
-      <!-- Knappar placerade i högerkanten -->
-      <div class="sm:absolute sm:top-0 sm:right-0 flex flex-wrap items-center justify-center sm:justify-end gap-2 mb-6 sm:mb-0">
-        <button id="qm-btn" type="button" class="rounded-md border border-zinc-700 bg-zinc-900/90 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-zinc-300 transition-all hover:border-zinc-500 active:scale-95 shadow-md">
-          Quartermaster: OFF (5 Slots)
-        </button>
-
-        <button id="weapons-btn" type="button" class="rounded-md border border-zinc-700 bg-zinc-900/90 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-zinc-300 transition-all hover:border-zinc-500 active:scale-95 shadow-md">
-          Only Weapons: OFF
-        </button>
-      </div>
-
       <!-- Huvudrubrik (centrerad i mitten) -->
       <div class="text-[11px] font-semibold uppercase tracking-[0.35em] text-amber-500/80">
         Hunt: Showdown 1896
@@ -85,11 +72,22 @@
       </div>
     </div>
 
-    <!-- Action Buttons -->
-    <div class="mt-10 flex flex-wrap justify-center gap-4 text-center">
-      <button id="roll-btn" type="button" class="rounded-md border border-amber-600/40 bg-amber-600 px-8 py-3.5 text-lg font-bold tracking-wide text-zinc-950 shadow-lg hover:bg-amber-500 transition-all active:scale-[0.98]">
-        Roll Loadout
-      </button>
+    <!-- Settings Toggles (Placerade precis ovanför Roll-knapparna) -->
+      <div class="mt-8 mb-3 flex flex-wrap items-center justify-center sm:justify-end gap-2">
+        <button id="qm-btn" type="button" class="rounded-md border border-zinc-700 bg-zinc-900/90 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-zinc-300 transition-all hover:border-zinc-500 active:scale-95 shadow-md">
+          Quartermaster: OFF (5 Slots)
+        </button>
+
+        <button id="weapons-btn" type="button" class="rounded-md border border-zinc-700 bg-zinc-900/90 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-zinc-300 transition-all hover:border-zinc-500 active:scale-95 shadow-md">
+          Only Weapons: OFF
+        </button>
+      </div>
+
+      <!-- Roll Buttons -->
+      <div class="flex flex-wrap items-center justify-center gap-4">
+        <button id="roll-btn" type="button" class="...">Roll Loadout</button>
+        <button id="meme-btn" type="button" class="...">Roll Meme Loadout</button>
+      </div>
 
       <button id="meme-btn" type="button" class="rounded-md border border-amber-800/40 bg-zinc-900 px-8 py-3.5 text-lg font-bold tracking-wide text-amber-400 shadow-lg hover:bg-zinc-800 transition-all active:scale-[0.98]">
         🤡 Roll Meme Loadout
