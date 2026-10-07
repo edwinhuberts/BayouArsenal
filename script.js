@@ -189,6 +189,7 @@ function getCustomAmmoForWeapon(weapon) {
   if (name.includes("Marathon")) return ["FMJ Ammo", "Poison Ammo"];
   if (name.includes("Infantry 73L") || name.includes("Frontier 73C") || name.includes("Ranger 73") || name.includes("Vandal 73C")) {
     return ["FMJ Ammo", "High Velocity Ammo", "Incendiary Ammo", "Poison Ammo", "Subsonic Ammo"];
+    if (name.includes("LeMat")) return ["FMJ Ammo", "High Velocity Ammo", "Incendiary Ammo]
   }
 
   // MEDIUM
