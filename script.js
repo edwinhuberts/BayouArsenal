@@ -168,12 +168,14 @@ const CONSUMABLES = ["Weak Vitality Shot", "Vitality Shot", "Weak Stamina Shot",
 // --- STATE ---
 let quartermaster = false;
 let onlyWeapons = false;
+let isRolling = false;
 
 // --- UTILS ---
 function getRandomItem(arr) {
   if (!arr || arr.length === 0) return null;
   return arr[Math.floor(Math.random() * arr.length)];
 }
+
 function canBeDualWielded(weapon) {
   if (!weapon || weapon.slot !== 1) return false;
   // Exkludera melee-vapen i 1-slot kategorin
@@ -195,8 +197,8 @@ function getCustomAmmoForWeapon(weapon) {
   if (name.includes("Marathon")) return ["FMJ Ammo", "Poison Ammo"];
   if (name.includes("Infantry 73L") || name.includes("Frontier 73C") || name.includes("Ranger 73") || name.includes("Vandal 73C")) {
     return ["FMJ Ammo", "High Velocity Ammo", "Incendiary Ammo", "Poison Ammo", "Subsonic Ammo"];
-  if (name.includes("LeMat")) return ["FMJ Ammo", "High Velocity Ammo", "Incendiary Ammo"];
   }
+  if (name.includes("LeMat")) return ["FMJ Ammo", "High Velocity Ammo", "Incendiary Ammo"];
 
   // MEDIUM
   if (name.includes("Centennial")) return ["FMJ Ammo", "Poison Ammo", "High Velocity Ammo", "Subsonic Ammo"];
@@ -262,7 +264,7 @@ function toggleQuartermaster() {
     qmBtn.classList.toggle("border-amber-500/60", quartermaster);
     qmBtn.classList.toggle("text-amber-400", quartermaster);
   }
-  rollWeapons();
+  rollAllAnimated();
 }
 
 function toggleOnlyWeapons() {
@@ -291,7 +293,6 @@ function rollWeapons() {
   let primary = { ...rawPrimary };
 
   // 30% chans för Dual Wield / Pair om det är en giltig 1-slot pistol
-  // och det finns tillräckligt med slots kvar (maxSlots - 1)
   if (canBeDualWielded(primary) && (maxSlots - 2 >= 1) && Math.random() < 0.3) {
     primary.name = `${primary.name} (Pair)`;
     primary.slot = 2; // Pair tar 2 slots
@@ -360,6 +361,35 @@ function rollAll() {
   rollGear();
 }
 
+// --- RULLNINGSANIMATION (SLOT MACHINE) ---
+function rollAllAnimated() {
+  if (isRolling) return;
+  isRolling = true;
+
+  const rollBtn = document.getElementById("roll-btn");
+  const container = document.body;
+
+  if (rollBtn) rollBtn.disabled = true;
+  container.classList.add("rolling");
+
+  let counter = 0;
+  const maxRolls = 12; // Antal snabba skiften
+  const intervalTime = 60; // Millisekunder per skifte
+
+  const interval = setInterval(() => {
+    rollAll();
+    counter++;
+
+    if (counter >= maxRolls) {
+      clearInterval(interval);
+      rollAll(); // Sista riktiga rullningen
+      container.classList.remove("rolling");
+      if (rollBtn) rollBtn.disabled = false;
+      isRolling = false;
+    }
+  }, intervalTime);
+}
+
 // --- INIT & EVENT LISTENERS ---
 function init() {
   const rollBtn = document.getElementById("roll-btn");
@@ -367,12 +397,12 @@ function init() {
   const weaponsBtn = document.getElementById("weapons-btn");
   const yearElem = document.getElementById("year");
 
-  if (rollBtn) rollBtn.addEventListener("click", rollAll);
+  if (rollBtn) rollBtn.addEventListener("click", rollAllAnimated);
   if (qmBtn) qmBtn.addEventListener("click", toggleQuartermaster);
   if (weaponsBtn) weaponsBtn.addEventListener("click", toggleOnlyWeapons);
   if (yearElem) yearElem.textContent = new Date().getFullYear();
 
-  rollAll();
+  rollAll(); // Första laddningen utan animation
 }
 
 if (document.readyState === "loading") {
