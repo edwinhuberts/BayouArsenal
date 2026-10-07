@@ -174,6 +174,12 @@ function getRandomItem(arr) {
   if (!arr || arr.length === 0) return null;
   return arr[Math.floor(Math.random() * arr.length)];
 }
+function canBeDualWielded(weapon) {
+  if (!weapon || weapon.slot !== 1) return false;
+  // Exkludera melee-vapen i 1-slot kategorin
+  const nonPistols = ["Baseball Bat", "Cavalry Saber", "Machete"];
+  return !nonPistols.includes(weapon.name);
+}
 
 // --- SPECIFIK CUSTOM AMMO PER VAPENFAMILJ ---
 function getCustomAmmoForWeapon(weapon) {
@@ -277,14 +283,32 @@ function toggleOnlyWeapons() {
 function rollWeapons() {
   const maxSlots = quartermaster ? 6 : 5;
   
-  // Välj primärt vapen (får max ta maxSlots - 1 så att sekundärt får plats)
+  // Välj primärt vapen
   const validPrimaries = weapons.filter(w => w.slot <= maxSlots - 1);
-  let primary = getRandomItem(validPrimaries) || weapons[0];
+  let rawPrimary = getRandomItem(validPrimaries) || weapons[0];
+  
+  // Skapa en kopia så vi inte ändrar i grunddatabasen
+  let primary = { ...rawPrimary };
+
+  // 30% chans för Dual Wield / Pair om det är en giltig 1-slot pistol
+  // och det finns tillräckligt med slots kvar (maxSlots - 1)
+  if (canBeDualWielded(primary) && (maxSlots - 2 >= 1) && Math.random() < 0.3) {
+    primary.name = `${primary.name} (Pair)`;
+    primary.slot = 2; // Pair tar 2 slots
+  }
   
   // Välj sekundärt vapen baserat på återstående slots
   let availableSlotsForSecondary = maxSlots - primary.slot;
   let validSecondaries = weapons.filter(w => w.slot <= availableSlotsForSecondary);
-  let secondary = validSecondaries.length > 0 ? getRandomItem(validSecondaries) : getRandomItem(weapons.filter(w => w.slot === 1));
+  let rawSecondary = validSecondaries.length > 0 ? getRandomItem(validSecondaries) : getRandomItem(weapons.filter(w => w.slot === 1));
+  
+  let secondary = { ...rawSecondary };
+
+  // 30% chans för Dual Wield på sekundärt vapen om slots finns kvar
+  if (canBeDualWielded(secondary) && availableSlotsForSecondary >= 2 && Math.random() < 0.3) {
+    secondary.name = `${secondary.name} (Pair)`;
+    secondary.slot = 2;
+  }
 
   // Rendera Primär
   const pName = document.getElementById("primary-name");
