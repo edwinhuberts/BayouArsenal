@@ -1,9 +1,105 @@
-.text-glow-brass {
-  text-shadow: 0 0 20px rgba(245, 158, 11, 0.25);
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Inter:wght@400;600;700&display=swap');
+
+/* --- GRUNDINSTÄLLNINGAR --- */
+:root {
+  --bg-dark: #0a0a0c;
+  --panel-bg: #141418;
+  --gold-glow: #fef08a;
 }
 
-.texture-grain {
-  background-color: #09090b;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 0);
-  background-size: 24px 24px;
+body {
+  background-color: var(--bg-dark);
+  color: #e5e7eb;
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+/* --- RUBRIKER & FONT-TEMAN --- */
+h1, h2, h3, .hunt-font {
+  font-family: 'Cinzel', serif;
+}
+
+/* --- GLÖDEFFEKTER --- */
+
+/* Huvudtitel: Bayou Arsenal (Varm bärnsten/guld-glöd med puls) */
+.glow-main {
+  color: #fef08a;
+  text-shadow: 
+    0 0 5px rgba(253, 224, 71, 0.9),
+    0 0 12px rgba(234, 179, 8, 0.75),
+    0 0 25px rgba(202, 138, 4, 0.55),
+    0 0 45px rgba(161, 98, 7, 0.35);
+  animation: titleGlow 3.5s ease-in-out infinite alternate;
+}
+
+/* Undertitel: Hunt: Showdown 1896 (Mörkblodig/rost-glöd) */
+.glow-sub {
+  color: #d1d5db;
+  letter-spacing: 0.2em;
+  text-shadow: 
+    0 0 6px rgba(239, 68, 68, 0.7),
+    0 0 16px rgba(185, 28, 28, 0.5),
+    0 0 30px rgba(0, 0, 0, 0.9);
+}
+
+/* Subtil glöd för kort-titlar och klicka-knappar */
+.glow-accent {
+  text-shadow: 
+    0 0 8px rgba(245, 158, 11, 0.6),
+    0 0 18px rgba(180, 83, 9, 0.4);
+}
+
+/* Animation för pulserande titel-glöd */
+@keyframes titleGlow {
+  0% {
+    text-shadow: 
+      0 0 4px rgba(253, 224, 71, 0.7),
+      0 0 10px rgba(234, 179, 8, 0.5),
+      0 0 20px rgba(202, 138, 4, 0.3);
+  }
+  100% {
+    text-shadow: 
+      0 0 8px rgba(253, 224, 71, 1),
+      0 0 16px rgba(234, 179, 8, 0.85),
+      0 0 32px rgba(202, 138, 4, 0.65),
+      0 0 55px rgba(161, 98, 7, 0.45);
+  }
+}
+
+/* --- KORT OCH PANELER --- */
+.card-panel {
+  background: linear-gradient(145deg, #18181c, #101014);
+  border: 1px solid rgba(245, 158, 11, 0.15);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.7);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-panel:hover {
+  border-color: rgba(245, 158, 11, 0.35);
+  box-shadow: 0 12px 30px -5px rgba(245, 158, 11, 0.1);
+}
+
+/* --- KNAPPAR --- */
+.btn-hunt {
+  background: linear-gradient(180deg, #b45309 0%, #78350f 100%);
+  border: 1px solid #f59e0b;
+  color: #fff;
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(180, 83, 9, 0.4);
+}
+
+.btn-hunt:hover {
+  background: linear-gradient(180deg, #d97706 0%, #92400e 100%);
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.6);
+  transform: translateY(-1px);
+}
+
+.btn-hunt:active {
+  transform: translateY(1px);
 }
