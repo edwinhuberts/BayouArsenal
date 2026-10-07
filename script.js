@@ -1,12 +1,4 @@
 // --- DATABASE ---
-const CUSTOM_AMMO_TYPES = {
-  compact: ["FMJ Ammo", "Incendiary Ammo", "Poison Ammo", "High Velocity Ammo", "Dumdum"],
-  medium: ["FMJ Ammo", "Incendiary Ammo", "Poison Ammo", "High Velocity Ammo", "Dumdum"],
-  long: ["FMJ Ammo", "Incendiary Ammo", "Poison Ammo", "High Velocity Ammo", "Spitzer Ammo"],
-  shotgun: ["Slug Ammo", "Flechette Ammo", "Penny Shot", "Dragon's Breath"],
-  special: ["Custom Bolt/Arrow/Ammo"]
-};
-
 const weapons = [
   // ==================== 5-SLOT WEAPONS ====================
   { name: "Auto-5", slot: 5, type: "shotgun" },
@@ -75,7 +67,7 @@ const weapons = [
   { name: "1865 Carbine Aperture", slot: 3, type: "medium" },
   { name: "1865 Carbine Silencer", slot: 3, type: "medium" },
   { name: "1890 Cavalry", slot: 3, type: "compact" },
-  { name: "Auto-5 Shorty", slot: 3, type: "shotgun" },
+  { name: "Auto-4 Shorty", slot: 3, type: "shotgun" },
   { name: "Berthier 1892", slot: 3, type: "long" },
   { name: "Berthier 1892 Deadeye", slot: 3, type: "long" },
   { name: "Berthier 1892 Marksman", slot: 3, type: "long" },
@@ -183,14 +175,73 @@ function getRandomItem(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-function getAmmoDisplay(weapon) {
-  if (!weapon || !weapon.type) return "STANDARD";
-  const customList = CUSTOM_AMMO_TYPES[weapon.type];
-  if (customList && customList.length > 0 && Math.random() < 0.5) {
-    const chosenCustom = getRandomItem(customList);
-    return `${weapon.type.toUpperCase()} (${chosenCustom})`;
+// --- SPECIFIK CUSTOM AMMO PER VAPENFAMILJ ---
+function getCustomAmmoForWeapon(weapon) {
+  if (!weapon || !weapon.name) return [];
+  const name = weapon.name;
+  
+  // COMPACT
+  if (name.includes("Conversion")) return ["FMJ Ammo", "Dumdum Ammo"];
+  if (name.includes("Nagant M1895")) return ["Poison Ammo", "High Velocity Ammo"];
+  if (name.includes("Officer")) return ["High Velocity Ammo", "Poison Ammo", "Subsonic Ammo"];
+  if (name.includes("New Army")) return ["FMJ Ammo", "Dumdum Ammo"];
+  if (name.includes("Bornheim")) return ["High Velocity Ammo", "Incendiary Ammo", "Subsonic Ammo"];
+  if (name.includes("Marathon")) return ["FMJ Ammo", "Poison Ammo"];
+  if (name.includes("Infantry 73L") || name.includes("Frontier 73C") || name.includes("Ranger 73") || name.includes("Vandal 73C")) {
+    return ["FMJ Ammo", "High Velocity Ammo", "Incendiary Ammo", "Poison Ammo", "Subsonic Ammo"];
   }
-  return weapon.type.toUpperCase();
+
+  // MEDIUM
+  if (name.includes("Centennial")) return ["FMJ Ammo", "Poison Ammo", "High Velocity Ammo", "Subsonic Ammo"];
+  if (name.includes("Scottfield")) return ["FMJ Ammo", "Incendiary Ammo", "High Velocity Ammo", "Dumdum Ammo"];
+  if (name.includes("Pax")) return ["FMJ Ammo", "Incendiary Ammo", "Dumdum Ammo", "Poison Ammo"];
+  if (name.includes("Vetterli")) return ["FMJ Ammo", "Incendiary Ammo", "High Velocity Ammo"];
+  if (name.includes("Springfield 1866")) return ["Bleed (Dumdum) Ammo", "Explosive Ammo"];
+  if (name.includes("Drilling")) return ["Dumdum Ammo", "FMJ Ammo"];
+  if (name.includes("1865 Carbine")) return ["FMJ Ammo", "High Velocity Ammo", "Subsonic Ammo"];
+  if (name.includes("Maynard")) return ["High Velocity Ammo", "Subsonic Ammo", "Dumdum Ammo"]
+
+  // LONG
+  if (name.includes("Mosin-Nagant") || name.includes("Mosin Obrez")) return ["Spitzer Ammo", "Incendiary Ammo"];
+  if (name.includes("Lebel")) return ["Spitzer Ammo", "Incendiary Ammo"];
+  if (name.includes("Krag")) return ["Incendiary Ammo", "FMJ Ammo", "Subsonic Ammo"];
+  if (name.includes("Sparks")) return ["FMJ Ammo", "Incendiary Ammo", "Poison Ammo", "Subsonic Ammo"];
+  if (name.includes("Martini-Henry")) return ["Explosive Ammo", "Incendiary Ammo", "Dumdum Ammo"];
+  if (name.includes("Berthier")) return ["Spitzer Ammo", "Incendiary Ammo"];
+  if (name.includes("Uppercut")) return ["Explosive Ammo", "Incendiary Ammo", "FMJ Ammo"];
+  if (name.includes("Mako 1895")) return ["Explosive Ammo", "FMJ Ammo"];
+
+  // --- SHOTGUNS ---
+  if (name.includes("Romero")) return ["Slug Ammo", "Penny Shot", "Dragon Breath", "Starshell"];
+  if (name.includes("Rival")) return ["Slug Ammo", "Flechette Ammo", "Penny Shot", "Dragon Breath"];
+  if (name.includes("Specter")) return ["Slug Ammo", "Flechette Ammo", "Penny Shot", "Dragon Breath"];
+  if (name.includes("Terminus")) return ["Slug Ammo", "Flechette Ammo", "Penny Shot", "Dragon Breath"];
+  if (name.includes("Slate")) return ["Slug Ammo", "Penny Shot"];
+  if (name.includes("Auto-5") || name.includes("Auto-4")) return ["Slug Ammo", "Penny Shot", "Flechette];
+  if (name.includes("Burgess")) return ["Slug Ammo", "Penny Shot", "Flechette", "Dragon Breath"];
+  if (name.includes("Homestead")) return ["Slug Ammo", "Penny Shot", "Dragon Breath", "Flechette];
+  
+  // SPECIAL
+  if (name.includes("Hand Crossbow")) return ["Poison Bolt", "Choke Bolt", "Dragon Bolt"];
+  if (name.includes("Crossbow")) return ["Shot Bolt", "Explosive Bolt", "Steel Boltttr];
+  if (name.includes("Bomb Lance") || name.includes("Bomb Launcher")) return ["Steel Ball", "Dragon's Breath Shell"];
+  if (name.includes("Dolch")) return ["FMJ Ammo"];
+
+  return []; // Närstridsvapen eller vapen utan custom ammo
+}
+
+function getAmmoDisplay(weapon) {
+  if (!weapon) return "STANDARD";
+  
+  const customList = getCustomAmmoForWeapon(weapon);
+  
+  // 50% chans för Custom Ammo om det finns tillgängligt för vapnet
+  if (customList.length > 0 && Math.random() < 0.5) {
+    const chosenCustom = getRandomItem(customList);
+    return `${weapon.type ? weapon.type.toUpperCase() : "SPECIAL"} (${chosenCustom})`;
+  }
+  
+  return weapon.type ? weapon.type.toUpperCase() : "STANDARD";
 }
 
 // --- LOGIC ---
@@ -224,11 +275,11 @@ function toggleOnlyWeapons() {
 function rollWeapons() {
   const maxSlots = quartermaster ? 6 : 5;
   
-  // Välj primärt vapen (max slots - 1 så sekundär får plats)
+  // Välj primärt vapen (får max ta maxSlots - 1 så att sekundärt får plats)
   const validPrimaries = weapons.filter(w => w.slot <= maxSlots - 1);
   let primary = getRandomItem(validPrimaries) || weapons[0];
   
-  // Välj sekundärt vapen
+  // Välj sekundärt vapen baserat på återstående slots
   let availableSlotsForSecondary = maxSlots - primary.slot;
   let validSecondaries = weapons.filter(w => w.slot <= availableSlotsForSecondary);
   let secondary = validSecondaries.length > 0 ? getRandomItem(validSecondaries) : getRandomItem(weapons.filter(w => w.slot === 1));
