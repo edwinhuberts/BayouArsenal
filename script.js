@@ -373,8 +373,8 @@ function rollAllAnimated() {
   container.classList.add("rolling");
 
   let counter = 0;
-  const maxRolls = 12; // Antal snabba skiften
-  const intervalTime = 60; // Millisekunder per skifte
+  const maxRolls = 18; // Antal snabba skiften
+  const intervalTime = 50; // Millisekunder per skifte
 
   const interval = setInterval(() => {
     rollAll();
@@ -382,7 +382,7 @@ function rollAllAnimated() {
 
     if (counter >= maxRolls) {
       clearInterval(interval);
-      rollAll(); // Sista riktiga rullningen
+      rollAll(); // Slutgiltig slumpning
       container.classList.remove("rolling");
       if (rollBtn) rollBtn.disabled = false;
       isRolling = false;
