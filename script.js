@@ -169,6 +169,7 @@ const CONSUMABLES = ["Weak Vitality Shot", "Vitality Shot", "Weak Stamina Shot",
 let quartermaster = false;
 let onlyWeapons = false;
 let isRolling = false;
+let hasRolledOnce = false;
 
 // --- UTILS ---
 function getRandomItem(arr) {
@@ -178,7 +179,6 @@ function getRandomItem(arr) {
 
 function canBeDualWielded(weapon) {
   if (!weapon || weapon.slot !== 1) return false;
-  // Exkludera melee-vapen och armborst i 1-slot kategorin
   const nonDualWieldable = ["Baseball Bat", "Cavalry Saber", "Machete", "Hand Crossbow"];
   return !nonDualWieldable.includes(weapon.name);
 }
@@ -237,15 +237,13 @@ function getCustomAmmoForWeapon(weapon) {
   if (name.includes("Bomb Lance") || name.includes("Bomb Launcher")) return ["Steel Ball", "Dragon's Breath Shell"];
   if (name.includes("Dolch")) return ["FMJ Ammo"];
 
-  return []; // Närstridsvapen eller vapen utan custom ammo
+  return [];
 }
 
 function getAmmoDisplay(weapon) {
   if (!weapon) return "STANDARD";
   
   const customList = getCustomAmmoForWeapon(weapon);
-  
-  // 50% chans för Custom Ammo om det finns tillgängligt för vapnet
   if (customList.length > 0 && Math.random() < 0.5) {
     const chosenCustom = getRandomItem(customList);
     return `${weapon.type ? weapon.type.toUpperCase() : "SPECIAL"} (${chosenCustom})`;
@@ -264,7 +262,7 @@ function toggleQuartermaster() {
     qmBtn.classList.toggle("border-amber-500/60", quartermaster);
     qmBtn.classList.toggle("text-amber-400", quartermaster);
   }
-  rollAllAnimated();
+  if (hasRolledOnce) rollAllAnimated();
 }
 
 function toggleOnlyWeapons() {
@@ -277,7 +275,7 @@ function toggleOnlyWeapons() {
     weaponsBtn.classList.toggle("border-amber-500/60", onlyWeapons);
     weaponsBtn.classList.toggle("text-amber-400", onlyWeapons);
   }
-  if (equipmentSection) {
+  if (equipmentSection && hasRolledOnce) {
     equipmentSection.classList.toggle("hidden", onlyWeapons);
   }
 }
@@ -285,33 +283,25 @@ function toggleOnlyWeapons() {
 function rollWeapons() {
   const maxSlots = quartermaster ? 6 : 5;
   
-  // Välj primärt vapen
   const validPrimaries = weapons.filter(w => w.slot <= maxSlots - 1);
   let rawPrimary = getRandomItem(validPrimaries) || weapons[0];
-  
-  // Skapa en kopia så vi inte ändrar i grunddatabasen
   let primary = { ...rawPrimary };
 
-  // 30% chans för Dual Wield / Pair om det är en giltig 1-slot pistol
   if (canBeDualWielded(primary) && (maxSlots - 2 >= 1) && Math.random() < 0.3) {
     primary.name = `${primary.name} (Pair)`;
-    primary.slot = 2; // Pair tar 2 slots
+    primary.slot = 2;
   }
   
-  // Välj sekundärt vapen baserat på återstående slots
   let availableSlotsForSecondary = maxSlots - primary.slot;
   let validSecondaries = weapons.filter(w => w.slot <= availableSlotsForSecondary);
   let rawSecondary = validSecondaries.length > 0 ? getRandomItem(validSecondaries) : getRandomItem(weapons.filter(w => w.slot === 1));
-  
   let secondary = { ...rawSecondary };
 
-  // 30% chans för Dual Wield på sekundärt vapen om slots finns kvar
   if (canBeDualWielded(secondary) && availableSlotsForSecondary >= 2 && Math.random() < 0.3) {
     secondary.name = `${secondary.name} (Pair)`;
     secondary.slot = 2;
   }
 
-  // Rendera Primär
   const pName = document.getElementById("primary-name");
   const pSlot = document.getElementById("primary-slot");
   const pAmmo = document.getElementById("primary-ammo");
@@ -319,7 +309,6 @@ function rollWeapons() {
   if (pSlot) pSlot.textContent = `${primary.slot}-SLOT`;
   if (pAmmo) pAmmo.textContent = getAmmoDisplay(primary);
 
-  // Rendera Sekundär
   const sName = document.getElementById("secondary-name");
   const sSlot = document.getElementById("secondary-slot");
   const sAmmo = document.getElementById("secondary-ammo");
@@ -327,7 +316,6 @@ function rollWeapons() {
   if (sSlot) sSlot.textContent = `${secondary.slot}-SLOT`;
   if (sAmmo) sAmmo.textContent = getAmmoDisplay(secondary);
 
-  // Uppdatera slot-räknare
   const slotCounter = document.getElementById("slot-counter");
   if (slotCounter) {
     slotCounter.textContent = `${primary.slot + secondary.slot} / ${maxSlots}`;
@@ -366,6 +354,15 @@ function rollAllAnimated() {
   if (isRolling) return;
   isRolling = true;
 
+  // Gör sektionerna synliga vid första rullningen
+  if (!hasRolledOnce) {
+    hasRolledOnce = true;
+    const weaponsSection = document.getElementById("weapons-section");
+    const equipmentSection = document.getElementById("equipment-section");
+    if (weaponsSection) weaponsSection.classList.remove("hidden");
+    if (equipmentSection && !onlyWeapons) equipmentSection.classList.remove("hidden");
+  }
+
   const rollBtn = document.getElementById("roll-btn");
   const container = document.body;
 
@@ -373,8 +370,8 @@ function rollAllAnimated() {
   container.classList.add("rolling");
 
   let counter = 0;
-  const maxRolls = 18; // Antal snabba skiften
-  const intervalTime = 50; // Millisekunder per skifte
+  const maxRolls = 18;
+  const intervalTime = 50;
 
   const interval = setInterval(() => {
     rollAll();
@@ -382,7 +379,7 @@ function rollAllAnimated() {
 
     if (counter >= maxRolls) {
       clearInterval(interval);
-      rollAll(); // Slutgiltig slumpning
+      rollAll();
       container.classList.remove("rolling");
       if (rollBtn) rollBtn.disabled = false;
       isRolling = false;
@@ -401,8 +398,6 @@ function init() {
   if (qmBtn) qmBtn.addEventListener("click", toggleQuartermaster);
   if (weaponsBtn) weaponsBtn.addEventListener("click", toggleOnlyWeapons);
   if (yearElem) yearElem.textContent = new Date().getFullYear();
-
-  rollAll(); // Första laddningen utan animation
 }
 
 if (document.readyState === "loading") {
