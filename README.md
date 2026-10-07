@@ -1,31 +1,51 @@
 # 🤠 Bayou Arsenal — Hunt: Showdown 1896 Loadout Randomizer
 
-A fast, clean, and responsive loadout randomizer for **Hunt: Showdown 1896**. Let fate decide which weapons, tools, and consumables you take into the bayou!
+**Bayou Arsenal** is a lightweight web application designed for *Hunt: Showdown 1896* players. It randomly generates a complete loadout—weapons, custom ammo, tools, and consumables—directly in your browser.
 
 ---
 
-## ⚡ Features
+## 🌐 Live Demo
 
-- **Weapon Randomizer:** Generates primary and secondary weapon combinations that strictly follow in-game slot capacity rules (max 5 slots by default).
-- **Quartermaster Support:** Toggle *Quartermaster* on or off to allow up to 6 slots (e.g., 3-slot + 2-slot builds).
-- **Full Gear Generation:** Automatically rolls Melee, Medkit, 2 extra Tools, and 4 Consumables.
-- **Only Weapons Mode:** Hide equipment slots and focus purely on primary/secondary weapon loadouts.
-- **Meme Loadouts:** Roll fun, chaotic, or challenging loadouts for extra variety.
-- **100% Vanilla Web:** Built using pure HTML, CSS (Tailwind), and JavaScript — no heavy build steps, lightning-fast load times!
+> **Try it online:** [https://your-username.github.io/bayou-arsenal](https://your-username.github.io/bayou-arsenal)  
+*(Replace with your actual website URL if hosted)*
 
 ---
 
-## 🚀 Live Demo
+## ✨ Web App Features
 
-Check out the live app hosted on GitHub Pages:
-👉 **[Play / Open Bayou Arsenal](https://edwinhuberts.github.io/BayouArsenal/)**
+- 🎯 **Slot-Aware Weapon Randomizer:** Automatically calculates and outputs balanced primary/secondary weapon pairings based on maximum slot capacity.
+- 🔀 **Weapon-Specific Custom Ammo:** Matches authentic custom ammunition options (FMJ, Dumdum, High Velocity, Slugs, etc.) to the specific rolled weapon family.
+- 🎒 **Full Equipment Loadout:** Fills all 8 gear slots with appropriate Melee, Medkit, Support Tools, and Consumables.
+- 🎖️ **Quartermaster Toggle:** Seamlessly switches between 5-slot and 6-slot capacity.
+- ⚔️ **Only Weapons Mode:** Dynamic UI toggle to hide tool and consumable cards when you only need weapons.
+- 🎰 **Animated Roll Effect:** Fast, slot-machine style rolling animation on click.
+- 🙈 **Clean Entry State:** Interactive cards stay hidden until you press "Roll Loadout".
 
 ---
 
-## 📂 Project Structure
+## 🛠️ Built With
+
+- **HTML5** & **Vanilla JavaScript (ES6+)**
+- **Tailwind CSS** (via CDN for fast styling)
+- **CSS3** (Custom typography and glow animations)
+
+---
+
+## 🌐 Browser Compatibility
+
+Tested and supported on all modern desktop and mobile web browsers:
+- Google Chrome
+- Mozilla Firefox
+- Microsoft Edge
+- Apple Safari
+
+No installation, build tools, or backend required—it runs 100% client-side in the browser.
+
+---
+
+## 📁 File Structure
 
 ```text
-.
-├── index.html   # Main layout and structure
-├── style.css    # Custom styling and glow effects
-└── script.js    # Randomizer logic, weapon/item database, and event listeners
+├── index.html   # Web page structure
+├── style.css    # Web app animations & custom aesthetics
+└── script.js    # Data collections, randomizer engine & DOM management
