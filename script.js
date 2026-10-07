@@ -1,7 +1,7 @@
 // --- DATABASE ---
 const CUSTOM_AMMO_TYPES = {
-  compact: ["FMJ Ammo", "Incendiary Ammo", "Poison Ammo", "High Velocity Ammo", "Bleed (Dumdum) Ammo"],
-  medium: ["FMJ Ammo", "Incendiary Ammo", "Poison Ammo", "High Velocity Ammo", "Bleed (Dumdum) Ammo"],
+  compact: ["FMJ Ammo", "Incendiary Ammo", "Poison Ammo", "High Velocity Ammo", "Dumdum"],
+  medium: ["FMJ Ammo", "Incendiary Ammo", "Poison Ammo", "High Velocity Ammo", "Dumdum"],
   long: ["FMJ Ammo", "Incendiary Ammo", "Poison Ammo", "High Velocity Ammo", "Spitzer Ammo"],
   shotgun: ["Slug Ammo", "Flechette Ammo", "Penny Shot", "Dragon's Breath"],
   special: ["Custom Bolt/Arrow/Ammo"]
