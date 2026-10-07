@@ -6,8 +6,7 @@
 
 ## 🌐 Live Demo
 
-> **Try it online:** [https://your-username.github.io/bayou-arsenal](https://your-username.github.io/bayou-arsenal)  
-*(Replace with your actual website URL if hosted)*
+> **Try it online:** [https://edwinhuberts.github.io/BayouArsenal/](https://edwinhuberts.github.io/BayouArsenal/)  
 
 ---
 
