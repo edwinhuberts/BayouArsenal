@@ -110,3 +110,11 @@ h2, h3, .hunt-font {
 .btn-hunt:active {
   transform: translateY(1px);
 }
+/* Suddig effekt under rullningsanimationen */
+.rolling #primary-name,
+.rolling #secondary-name,
+.rolling [id^="gear-"] {
+  filter: blur(1.5px);
+  opacity: 0.8;
+  transition: filter 0.05s ease;
+}
