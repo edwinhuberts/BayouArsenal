@@ -189,7 +189,7 @@ function getCustomAmmoForWeapon(weapon) {
   if (name.includes("Marathon")) return ["FMJ Ammo", "Poison Ammo"];
   if (name.includes("Infantry 73L") || name.includes("Frontier 73C") || name.includes("Ranger 73") || name.includes("Vandal 73C")) {
     return ["FMJ Ammo", "High Velocity Ammo", "Incendiary Ammo", "Poison Ammo", "Subsonic Ammo"];
-    if (name.includes("LeMat")) return ["FMJ Ammo", "High Velocity Ammo", "Incendiary Ammo]
+  if (name.includes("LeMat")) return ["FMJ Ammo", "High Velocity Ammo", "Incendiary Ammo"];
   }
 
   // MEDIUM
@@ -200,8 +200,8 @@ function getCustomAmmoForWeapon(weapon) {
   if (name.includes("Springfield 1866")) return ["Bleed (Dumdum) Ammo", "Explosive Ammo"];
   if (name.includes("Drilling")) return ["Dumdum Ammo", "FMJ Ammo"];
   if (name.includes("1865 Carbine")) return ["FMJ Ammo", "High Velocity Ammo", "Subsonic Ammo"];
-  if (name.includes("Maynard")) return ["High Velocity Ammo", "Subsonic Ammo", "Dumdum Ammo"]
-  if (name.includes("Flame Rifle")) return ["🔥!!FIRE!!🔥"]
+  if (name.includes("Maynard")) return ["High Velocity Ammo", "Subsonic Ammo", "Dumdum Ammo"];
+  if (name.includes("Flame Rifle")) return ["🔥!!FIRE!!🔥"];
 
   // LONG
   if (name.includes("Mosin-Nagant") || name.includes("Mosin Obrez")) return ["Spitzer Ammo", "Incendiary Ammo"];
@@ -219,13 +219,13 @@ function getCustomAmmoForWeapon(weapon) {
   if (name.includes("Specter")) return ["Slug Ammo", "Flechette Ammo", "Penny Shot", "Dragon Breath"];
   if (name.includes("Terminus")) return ["Slug Ammo", "Flechette Ammo", "Penny Shot", "Dragon Breath"];
   if (name.includes("Slate")) return ["Slug Ammo", "Penny Shot"];
-  if (name.includes("Auto-5") || name.includes("Auto-4")) return ["Slug Ammo", "Penny Shot", "Flechette];
+  if (name.includes("Auto-5") || name.includes("Auto-4")) return ["Slug Ammo", "Penny Shot", "Flechette"];
   if (name.includes("Burgess")) return ["Slug Ammo", "Penny Shot", "Flechette", "Dragon Breath"];
-  if (name.includes("Homestead")) return ["Slug Ammo", "Penny Shot", "Dragon Breath", "Flechette];
+  if (name.includes("Homestead")) return ["Slug Ammo", "Penny Shot", "Dragon Breath", "Flechette"];
   
   // SPECIAL
   if (name.includes("Hand Crossbow")) return ["Poison Bolt", "Choke Bolt", "Dragon Bolt"];
-  if (name.includes("Crossbow")) return ["Shot Bolt", "Explosive Bolt", "Steel Boltttr];
+  if (name.includes("Crossbow")) return ["Shot Bolt", "Explosive Bolt", "Steel Bolt"];
   if (name.includes("Bomb Lance") || name.includes("Bomb Launcher")) return ["Steel Ball", "Dragon's Breath Shell"];
   if (name.includes("Dolch")) return ["FMJ Ammo"];
 
