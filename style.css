@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Inter:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rye&family=Cinzel:wght@600;800&family=Inter:wght@400;600;700&display=swap');
 
 /* --- GRUNDINSTÄLLNINGAR --- */
 :root {
@@ -17,7 +17,14 @@ body {
 }
 
 /* --- RUBRIKER & FONT-TEMAN --- */
-h1, h2, h3, .hunt-font {
+
+/* Western-font för huvudtiteln */
+.western-font {
+  font-family: 'Rye', serif;
+}
+
+/* Sekundär font för kort och undertitlar */
+h2, h3, .hunt-font {
   font-family: 'Cinzel', serif;
 }
 
@@ -86,7 +93,7 @@ h1, h2, h3, .hunt-font {
   background: linear-gradient(180deg, #b45309 0%, #78350f 100%);
   border: 1px solid #f59e0b;
   color: #fff;
-  font-family: 'Cinzel', serif;
+  font-family: 'Rye', serif;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
