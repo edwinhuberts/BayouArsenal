@@ -178,9 +178,9 @@ function getRandomItem(arr) {
 
 function canBeDualWielded(weapon) {
   if (!weapon || weapon.slot !== 1) return false;
-  // Exkludera melee-vapen i 1-slot kategorin
-  const nonPistols = ["Baseball Bat", "Cavalry Saber", "Machete"];
-  return !nonPistols.includes(weapon.name);
+  // Exkludera melee-vapen och armborst i 1-slot kategorin
+  const nonDualWieldable = ["Baseball Bat", "Cavalry Saber", "Machete", "Hand Crossbow"];
+  return !nonDualWieldable.includes(weapon.name);
 }
 
 // --- SPECIFIK CUSTOM AMMO PER VAPENFAMILJ ---
