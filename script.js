@@ -200,6 +200,7 @@ function getCustomAmmoForWeapon(weapon) {
   if (name.includes("Drilling")) return ["Dumdum Ammo", "FMJ Ammo"];
   if (name.includes("1865 Carbine")) return ["FMJ Ammo", "High Velocity Ammo", "Subsonic Ammo"];
   if (name.includes("Maynard")) return ["High Velocity Ammo", "Subsonic Ammo", "Dumdum Ammo"]
+  if (name.includes("Flame Rifle")) return ["🔥!!FIRE!!🔥"]
 
   // LONG
   if (name.includes("Mosin-Nagant") || name.includes("Mosin Obrez")) return ["Spitzer Ammo", "Incendiary Ammo"];
