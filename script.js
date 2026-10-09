@@ -303,7 +303,7 @@ function getCustomAmmoForWeapon(weapon) {
   if (name.includes("Hand Crossbow")) return ["Poison Bolt", "Choke Bolt", "Dragon Bolt"];
   if (name.includes("Crossbow")) return ["Shot Bolt", "Explosive Bolt", "Steel Bolt"];
   if (name.includes("Bomb Lance") || name.includes("Bomb Launcher")) return ["Steel Ball", "Dragon Breath"];
-  if (name.includes("Dolch")) return ["FMJ Ammo"];
+  if (name.includes("Dolch")) return ["Dumdum Ammo"];
 
   return [];
 }
