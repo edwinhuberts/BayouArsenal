@@ -129,3 +129,30 @@ h2, h3, .hunt-font {
   border-color: rgba(245, 158, 11, 0.4); /* Bärnstensfärgad glöd */
   transition: all 0.05s ease-in-out;
 }
+/* Custom Styling för Slidern */
+#budget-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #f59e0b; /* Amber 500 */
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+  transition: transform 0.1s ease, background-color 0.1s ease;
+}
+
+#budget-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  background: #fbbf24; /* Amber 400 */
+}
+
+#budget-slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #f59e0b;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+}
