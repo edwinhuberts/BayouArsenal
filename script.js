@@ -422,16 +422,16 @@ function rollGear(remainingBudget) {
 
   let totalGearCost = 0;
 
-  // Samla alla möjliga kategorier i ordning
+  // Ordning på slots där First Aid Kit (Medical Tool) prioriteras direkt!
   const gearSlots = [
-    { type: "Melee Tool", pool: MELEE_TOOLS },
-    { type: "Medical Tool", pool: MEDICAL_TOOLS },
-    { type: "Support Tool", pool: OTHER_TOOLS },
-    { type: "Support Tool", pool: OTHER_TOOLS },
-    { type: "Consumable", pool: CONSUMABLES },
-    { type: "Consumable", pool: CONSUMABLES },
-    { type: "Consumable", pool: CONSUMABLES },
-    { type: "Consumable", pool: CONSUMABLES }
+    { type: "Medical Tool", pool: MEDICAL_TOOLS }, // 1. Förstaklass: Medical (First Aid Kit)
+    { type: "Melee Tool", pool: MELEE_TOOLS },      // 2. Närstrid (Knife/Duster/etc)
+    { type: "Support Tool", pool: OTHER_TOOLS },     // 3. Support Tool 1
+    { type: "Support Tool", pool: OTHER_TOOLS },     // 4. Support Tool 2
+    { type: "Consumable", pool: CONSUMABLES },      // 5. Consumable 1
+    { type: "Consumable", pool: CONSUMABLES },      // 6. Consumable 2
+    { type: "Consumable", pool: CONSUMABLES },      // 7. Consumable 3
+    { type: "Consumable", pool: CONSUMABLES }       // 8. Consumable 4
   ];
 
   gearSlots.forEach((slot, index) => {
@@ -496,7 +496,7 @@ function rollAll() {
     if (sCost) sCost.textContent = "$0";
   }
 
-  // 2. Fyll på med gear för pengarna som finns kvar!
+  // 2. Fyll på med gear för pengarna som finns kvar (börjar med First Aid Kit!)
   const remainingBudget = maxBudget - weaponCost;
   const gearCost = rollGear(remainingBudget);
 
