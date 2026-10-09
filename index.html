@@ -33,6 +33,22 @@
           Total Cost: <span id="total-cost" class="font-bold text-amber-300">$0</span>
         </span>
       </div>
+      <!-- Budget Slider -->
+      <div class="mt-6 mx-auto max-w-xs text-center space-y-2">
+        <div class="flex justify-between items-center text-xs text-zinc-400 font-medium">
+          <span>Max Budget:</span>
+          <span id="budget-value" class="font-bold text-amber-400">$2000</span>
+        </div>
+        <input 
+          type="range" 
+          id="budget-slider" 
+          min="100" 
+          max="4000" 
+          step="50" 
+          value="2000"
+          class="w-full h-2 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-amber-500"
+        />
+      </div>
     </header>
 
     <!-- Main Loadout Display -->
