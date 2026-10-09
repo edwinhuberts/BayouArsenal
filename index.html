@@ -24,109 +24,142 @@
         Let fate choose your kit. Roll a random loadout and drag it into the swamp.
       </p>
 
-      <!-- Slot Counter -->
-      <div class="mt-5 flex justify-center">
-        <span class="rounded-md border border-zinc-800 bg-zinc-900/60 px-3.5 py-1.5 text-xs text-zinc-400 shadow-sm">
-          Used Slots: <span id="slot-counter" class="font-bold text-zinc-100">5 / 5</span>
+      <!-- Counter Badges -->
+      <div class="mt-5 flex flex-wrap justify-center gap-3">
+        <span class="rounded-md border border-zinc-800 bg-zinc-900/80 px-3.5 py-1.5 text-xs text-zinc-400 shadow-sm">
+          Slots: <span id="slot-counter" class="font-bold text-zinc-100">0 / 5</span>
+        </span>
+        <span id="cost-display" class="hidden rounded-md border border-amber-500/40 bg-amber-500/10 px-3.5 py-1.5 text-xs text-amber-400 font-medium shadow-sm shadow-amber-500/5">
+          Total Cost: <span id="total-cost" class="font-bold text-amber-300">$0</span>
         </span>
       </div>
     </header>
 
     <!-- Main Loadout Display -->
     <section class="space-y-6">
-      <!-- Weapons Section (Gömd från start med 'hidden') -->
+      <!-- Weapons Section -->
       <div id="weapons-section" class="hidden grid grid-cols-1 md:grid-cols-2 gap-4">
         <!-- Primary Weapon Card -->
-        <div class="rounded-xl border border-zinc-800/80 bg-zinc-900/40 p-5 shadow-inner transition-all">
-          <div class="text-[10px] font-bold uppercase tracking-wider text-zinc-500">
-            Primary Weapon
+        <div class="rounded-xl border border-zinc-800/80 bg-zinc-900/40 p-5 shadow-inner transition-all flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-center text-[10px] font-bold uppercase tracking-wider text-zinc-500">
+              <span>Primary Weapon</span>
+              <span id="primary-cost" class="text-amber-400 font-bold text-xs bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">$0</span>
+            </div>
+            <div id="primary-name" class="mt-2 text-xl font-bold text-zinc-100">
+              -
+            </div>
           </div>
-          <div id="primary-name" class="mt-2 text-xl font-bold text-zinc-100">
-            -
-          </div>
-          <div class="mt-3 flex items-center gap-2">
+          <div class="mt-4 flex items-center justify-between">
             <span id="primary-slot" class="rounded border border-zinc-700/60 bg-zinc-800/80 px-2 py-0.5 text-[10px] font-medium text-zinc-300">
               -
             </span>
-            <span id="primary-ammo" class="text-xs text-zinc-400">
+            <span id="primary-ammo" class="text-xs text-zinc-400 font-mono">
               -
             </span>
           </div>
         </div>
 
         <!-- Secondary Weapon Card -->
-        <div class="rounded-xl border border-zinc-800/80 bg-zinc-900/40 p-5 shadow-inner transition-all">
-          <div class="text-[10px] font-bold uppercase tracking-wider text-zinc-500">
-            Secondary Weapon
+        <div class="rounded-xl border border-zinc-800/80 bg-zinc-900/40 p-5 shadow-inner transition-all flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-center text-[10px] font-bold uppercase tracking-wider text-zinc-500">
+              <span>Secondary Weapon</span>
+              <span id="secondary-cost" class="text-amber-400 font-bold text-xs bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">$0</span>
+            </div>
+            <div id="secondary-name" class="mt-2 text-xl font-bold text-zinc-100">
+              -
+            </div>
           </div>
-          <div id="secondary-name" class="mt-2 text-xl font-bold text-zinc-100">
-            -
-          </div>
-          <div class="mt-3 flex items-center gap-2">
+          <div class="mt-4 flex items-center justify-between">
             <span id="secondary-slot" class="rounded border border-zinc-700/60 bg-zinc-800/80 px-2 py-0.5 text-[10px] font-medium text-zinc-300">
               -
             </span>
-            <span id="secondary-ammo" class="text-xs text-zinc-400">
+            <span id="secondary-ammo" class="text-xs text-zinc-400 font-mono">
               -
             </span>
           </div>
         </div>
       </div>
 
-      <!-- Equipment Section (Gömd från start med 'hidden') -->
+      <!-- Equipment Section -->
       <div id="equipment-section" class="hidden space-y-3">
         <div class="text-[10px] font-bold uppercase tracking-wider text-zinc-500">
-          Equipment Slots (8)
+          Equipment & Consumables
         </div>
         
         <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2.5">
-          <!-- Melee -->
-          <div class="rounded-lg border border-zinc-800/60 bg-zinc-900/30 p-3 text-center">
-            <div class="text-[9px] font-bold uppercase text-amber-500/70">Melee</div>
-            <div id="gear-0" class="mt-2 text-xs font-semibold text-zinc-200">-</div>
-            <div id="gear-0-type" class="mt-1 text-[9px] text-zinc-500 uppercase">-</div>
+          <!-- Gear Items 0 to 7 -->
+          <div class="rounded-lg border border-zinc-800/60 bg-zinc-900/30 p-3 text-center flex flex-col justify-between">
+            <div>
+              <div class="text-[9px] font-bold uppercase text-amber-500/70">Melee</div>
+              <div id="gear-0" class="mt-2 text-xs font-semibold text-zinc-200">-</div>
+              <div id="gear-0-type" class="mt-1 text-[9px] text-zinc-500 uppercase">-</div>
+            </div>
+            <div id="gear-0-price" class="mt-2 text-[10px] font-bold text-amber-400/80">$0</div>
           </div>
-          <!-- Medkit -->
-          <div class="rounded-lg border border-zinc-800/60 bg-zinc-900/30 p-3 text-center">
-            <div class="text-[9px] font-bold uppercase text-amber-500/70">Medkit</div>
-            <div id="gear-1" class="mt-2 text-xs font-semibold text-zinc-200">-</div>
-            <div id="gear-1-type" class="mt-1 text-[9px] text-zinc-500 uppercase">-</div>
+
+          <div class="rounded-lg border border-zinc-800/60 bg-zinc-900/30 p-3 text-center flex flex-col justify-between">
+            <div>
+              <div class="text-[9px] font-bold uppercase text-amber-500/70">Medical</div>
+              <div id="gear-1" class="mt-2 text-xs font-semibold text-zinc-200">-</div>
+              <div id="gear-1-type" class="mt-1 text-[9px] text-zinc-500 uppercase">-</div>
+            </div>
+            <div id="gear-1-price" class="mt-2 text-[10px] font-bold text-amber-400/80">$0</div>
           </div>
-          <!-- Tool 3 -->
-          <div class="rounded-lg border border-zinc-800/60 bg-zinc-900/30 p-3 text-center">
-            <div class="text-[9px] font-bold uppercase text-zinc-500">Tool 3</div>
-            <div id="gear-2" class="mt-2 text-xs font-semibold text-zinc-200">-</div>
-            <div id="gear-2-type" class="mt-1 text-[9px] text-zinc-500 uppercase">-</div>
+
+          <div class="rounded-lg border border-zinc-800/60 bg-zinc-900/30 p-3 text-center flex flex-col justify-between">
+            <div>
+              <div class="text-[9px] font-bold uppercase text-zinc-500">Tool 3</div>
+              <div id="gear-2" class="mt-2 text-xs font-semibold text-zinc-200">-</div>
+              <div id="gear-2-type" class="mt-1 text-[9px] text-zinc-500 uppercase">-</div>
+            </div>
+            <div id="gear-2-price" class="mt-2 text-[10px] font-bold text-amber-400/80">$0</div>
           </div>
-          <!-- Tool 4 -->
-          <div class="rounded-lg border border-zinc-800/60 bg-zinc-900/30 p-3 text-center">
-            <div class="text-[9px] font-bold uppercase text-zinc-500">Tool 4</div>
-            <div id="gear-3" class="mt-2 text-xs font-semibold text-zinc-200">-</div>
-            <div id="gear-3-type" class="mt-1 text-[9px] text-zinc-500 uppercase">-</div>
+
+          <div class="rounded-lg border border-zinc-800/60 bg-zinc-900/30 p-3 text-center flex flex-col justify-between">
+            <div>
+              <div class="text-[9px] font-bold uppercase text-zinc-500">Tool 4</div>
+              <div id="gear-3" class="mt-2 text-xs font-semibold text-zinc-200">-</div>
+              <div id="gear-3-type" class="mt-1 text-[9px] text-zinc-500 uppercase">-</div>
+            </div>
+            <div id="gear-3-price" class="mt-2 text-[10px] font-bold text-amber-400/80">$0</div>
           </div>
-          <!-- Consumable 1 -->
-          <div class="rounded-lg border border-zinc-800/60 bg-zinc-900/30 p-3 text-center">
-            <div class="text-[9px] font-bold uppercase text-amber-500/70">Consumable 1</div>
-            <div id="gear-4" class="mt-2 text-xs font-semibold text-zinc-200">-</div>
-            <div id="gear-4-type" class="mt-1 text-[9px] text-zinc-500 uppercase">-</div>
+
+          <div class="rounded-lg border border-zinc-800/60 bg-zinc-900/30 p-3 text-center flex flex-col justify-between">
+            <div>
+              <div class="text-[9px] font-bold uppercase text-amber-500/70">Item 1</div>
+              <div id="gear-4" class="mt-2 text-xs font-semibold text-zinc-200">-</div>
+              <div id="gear-4-type" class="mt-1 text-[9px] text-zinc-500 uppercase">-</div>
+            </div>
+            <div id="gear-4-price" class="mt-2 text-[10px] font-bold text-amber-400/80">$0</div>
           </div>
-          <!-- Consumable 2 -->
-          <div class="rounded-lg border border-zinc-800/60 bg-zinc-900/30 p-3 text-center">
-            <div class="text-[9px] font-bold uppercase text-amber-500/70">Consumable 2</div>
-            <div id="gear-5" class="mt-2 text-xs font-semibold text-zinc-200">-</div>
-            <div id="gear-5-type" class="mt-1 text-[9px] text-zinc-500 uppercase">-</div>
+
+          <div class="rounded-lg border border-zinc-800/60 bg-zinc-900/30 p-3 text-center flex flex-col justify-between">
+            <div>
+              <div class="text-[9px] font-bold uppercase text-amber-500/70">Item 2</div>
+              <div id="gear-5" class="mt-2 text-xs font-semibold text-zinc-200">-</div>
+              <div id="gear-5-type" class="mt-1 text-[9px] text-zinc-500 uppercase">-</div>
+            </div>
+            <div id="gear-5-price" class="mt-2 text-[10px] font-bold text-amber-400/80">$0</div>
           </div>
-          <!-- Consumable 3 -->
-          <div class="rounded-lg border border-zinc-800/60 bg-zinc-900/30 p-3 text-center">
-            <div class="text-[9px] font-bold uppercase text-amber-500/70">Consumable 3</div>
-            <div id="gear-6" class="mt-2 text-xs font-semibold text-zinc-200">-</div>
-            <div id="gear-6-type" class="mt-1 text-[9px] text-zinc-500 uppercase">-</div>
+
+          <div class="rounded-lg border border-zinc-800/60 bg-zinc-900/30 p-3 text-center flex flex-col justify-between">
+            <div>
+              <div class="text-[9px] font-bold uppercase text-amber-500/70">Item 3</div>
+              <div id="gear-6" class="mt-2 text-xs font-semibold text-zinc-200">-</div>
+              <div id="gear-6-type" class="mt-1 text-[9px] text-zinc-500 uppercase">-</div>
+            </div>
+            <div id="gear-6-price" class="mt-2 text-[10px] font-bold text-amber-400/80">$0</div>
           </div>
-          <!-- Consumable 4 -->
-          <div class="rounded-lg border border-zinc-800/60 bg-zinc-900/30 p-3 text-center">
-            <div class="text-[9px] font-bold uppercase text-amber-500/70">Consumable 4</div>
-            <div id="gear-7" class="mt-2 text-xs font-semibold text-zinc-200">-</div>
-            <div id="gear-7-type" class="mt-1 text-[9px] text-zinc-500 uppercase">-</div>
+
+          <div class="rounded-lg border border-zinc-800/60 bg-zinc-900/30 p-3 text-center flex flex-col justify-between">
+            <div>
+              <div class="text-[9px] font-bold uppercase text-amber-500/70">Item 4</div>
+              <div id="gear-7" class="mt-2 text-xs font-semibold text-zinc-200">-</div>
+              <div id="gear-7-type" class="mt-1 text-[9px] text-zinc-500 uppercase">-</div>
+            </div>
+            <div id="gear-7-price" class="mt-2 text-[10px] font-bold text-amber-400/80">$0</div>
           </div>
         </div>
       </div>
@@ -142,7 +175,7 @@
         </button>
       </div>
 
-      <!-- Roll Action Buttons -->
+      <!-- Roll Action Button -->
       <div class="flex flex-wrap items-center justify-center gap-4">
         <button id="roll-btn" type="button" class="rounded-lg bg-amber-500 px-6 py-3 text-sm font-bold uppercase tracking-wider text-zinc-950 transition-all hover:bg-amber-400 active:scale-95 shadow-lg shadow-amber-500/10">
           Roll Loadout
