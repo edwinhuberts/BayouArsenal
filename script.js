@@ -1,4 +1,4 @@
-// --- DATABASE ---
+// ==================== DATABASE ====================
 const weapons = [
   // ==================== 5-SLOT WEAPONS ====================
   { name: "Auto-5", slot: 5, type: "shotgun", cost: 600 },
@@ -160,24 +160,67 @@ const weapons = [
   { name: "Sparks Pistol Silencer", slot: 1, type: "long", cost: 178 }
 ];
 
+// Pristabell för Utrustning
+const GEAR_PRICES = {
+  "Knuckle Knife": 50, "Duster": 15, "Knife": 30, "Heavy Knife": 40,
+  "Throwing Knives": 40, "Throwing Axes": 60, "Throwing Spear": 120,
+  "First Aid Kit": 30, "Flare Pistol": 36, "Fusees": 10, "Alert Trip Mines": 30,
+  "Concertina Trip Mines": 90, "Poison Trip Mines": 60, "Decoys": 10,
+  "Blank Fire Decoys": 45, "Choke Bombs": 90, "Spyglass": 8,
+  "Weak Vitality Shot": 40, "Vitality Shot": 85, "Weak Stamina Shot": 40,
+  "Stamina Shot": 100, "Weak Antidote Shot": 30, "Antidote Shot": 55,
+  "Regeneration Shot": 110, "Dynamite Stick": 18, "Waxed Dynamite Stick": 24,
+  "Dynamite Bundle": 75, "Big Dynamite Bundle": 110, "Frag Bomb": 103,
+  "Liquid Fire Bomb": 35, "Fire Bomb": 30, "Hellfire Bomb": 70,
+  "Poison Bomb": 25, "Flash Bomb": 47, "Concertina Bomb": 48,
+  "Sticky Bomb": 64, "Ammo Box": 115, "Tool Box": 70,
+  "Beetle (Stalker)": 45, "Beetle (Fire)": 45
+};
+
+// Pristabell för Custom Ammo
+const CUSTOM_AMMO_PRICES = {
+  "FMJ Ammo": 50,
+  "Dumdum Ammo": 60,
+  "Bleed (Dumdum) Ammo": 60,
+  "High Velocity Ammo": 50,
+  "Poison Ammo": 40,
+  "Incendiary Ammo": 40,
+  "Subsonic Ammo": 35,
+  "Explosive Ammo": 90,
+  "Spitzer Ammo": 150,
+  "Slug Ammo": 130,
+  "Penny Shot": 25,
+  "Flechette Ammo": 45,
+  "Flechette": 45,
+  "Dragon Breath": 30,
+  "Starshell": 15,
+  "Poison Bolt": 25,
+  "Choke Bolt": 20,
+  "Dragon Bolt": 25,
+  "Shot Bolt": 90,
+  "Explosive Bolt": 90,
+  "Steel Bolt": 15,
+  "Steel Ball": 35,
+  "Dragon Breath": 35,
+};
+
 const MELEE_TOOLS = ["Knuckle Knife", "Duster", "Knife", "Heavy Knife", "Throwing Knives", "Throwing Axes", "Throwing Spear"];
 const MEDICAL_TOOLS = ["First Aid Kit"];
 const OTHER_TOOLS = ["Flare Pistol", "Fusees", "Alert Trip Mines", "Concertina Trip Mines", "Poison Trip Mines", "Decoys", "Blank Fire Decoys", "Choke Bombs", "Spyglass"];
 const CONSUMABLES = ["Weak Vitality Shot", "Vitality Shot", "Weak Stamina Shot", "Stamina Shot", "Weak Antidote Shot", "Antidote Shot", "Regeneration Shot", "Dynamite Stick", "Waxed Dynamite Stick", "Dynamite Bundle", "Big Dynamite Bundle", "Frag Bomb", "Liquid Fire Bomb", "Fire Bomb", "Hellfire Bomb", "Poison Bomb", "Flash Bomb", "Concertina Bomb", "Sticky Bomb", "Ammo Box", "Tool Box", "Beetle (Stalker)", "Beetle (Fire)"];
 
-// --- STATE ---
+// ==================== STATE ====================
 let quartermaster = false;
 let onlyWeapons = false;
 let isRolling = false;
 let hasRolledOnce = false;
 
-// --- UTILS ---
+// ==================== UTILS ====================
 function getRandomItem(arr) {
   if (!arr || arr.length === 0) return null;
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-// Hjälpfunktion för att formattera priset snyggt (visar SCARCE om priset är 0)
 function formatPrice(cost) {
   return cost === 0 ? "SCARCE" : `$${cost}`;
 }
@@ -188,12 +231,10 @@ function canBeDualWielded(weapon) {
   return !nonDualWieldable.includes(weapon.name);
 }
 
-// --- SPECIFIK CUSTOM AMMO PER VAPENFAMILJ ---
 function getCustomAmmoForWeapon(weapon) {
   if (!weapon || !weapon.name) return [];
   const name = weapon.name;
   
-  // COMPACT
   if (name.includes("Conversion")) return ["FMJ Ammo", "Dumdum Ammo"];
   if (name.includes("Nagant M1895")) return ["Poison Ammo", "High Velocity Ammo"];
   if (name.includes("Officer")) return ["High Velocity Ammo", "Poison Ammo", "Subsonic Ammo"];
@@ -205,7 +246,6 @@ function getCustomAmmoForWeapon(weapon) {
   }
   if (name.includes("LeMat")) return ["FMJ Ammo", "High Velocity Ammo", "Incendiary Ammo"];
 
-  // MEDIUM
   if (name.includes("Centennial")) return ["FMJ Ammo", "Poison Ammo", "High Velocity Ammo", "Subsonic Ammo"];
   if (name.includes("Scottfield")) return ["FMJ Ammo", "Incendiary Ammo", "High Velocity Ammo", "Dumdum Ammo"];
   if (name.includes("Pax")) return ["FMJ Ammo", "Incendiary Ammo", "Dumdum Ammo", "Poison Ammo"];
@@ -216,7 +256,6 @@ function getCustomAmmoForWeapon(weapon) {
   if (name.includes("Maynard")) return ["High Velocity Ammo", "Subsonic Ammo", "Dumdum Ammo"];
   if (name.includes("Flame Rifle")) return ["🔥!!FIRE!!🔥"];
 
-  // LONG
   if (name.includes("Mosin-Nagant") || name.includes("Mosin Obrez")) return ["Spitzer Ammo", "Incendiary Ammo"];
   if (name.includes("Lebel")) return ["Spitzer Ammo", "Incendiary Ammo"];
   if (name.includes("Krag")) return ["Incendiary Ammo", "FMJ Ammo", "Subsonic Ammo"];
@@ -226,7 +265,6 @@ function getCustomAmmoForWeapon(weapon) {
   if (name.includes("Uppercut")) return ["Explosive Ammo", "Incendiary Ammo", "FMJ Ammo"];
   if (name.includes("Mako 1895")) return ["Explosive Ammo", "FMJ Ammo"];
 
-  // --- SHOTGUNS ---
   if (name.includes("Romero")) return ["Slug Ammo", "Penny Shot", "Dragon Breath", "Starshell"];
   if (name.includes("Rival")) return ["Slug Ammo", "Flechette Ammo", "Penny Shot", "Dragon Breath"];
   if (name.includes("Specter")) return ["Slug Ammo", "Flechette Ammo", "Penny Shot", "Dragon Breath"];
@@ -236,7 +274,6 @@ function getCustomAmmoForWeapon(weapon) {
   if (name.includes("Burgess")) return ["Slug Ammo", "Penny Shot", "Flechette", "Dragon Breath"];
   if (name.includes("Homestead")) return ["Slug Ammo", "Penny Shot", "Dragon Breath", "Flechette"];
   
-  // SPECIAL
   if (name.includes("Hand Crossbow")) return ["Poison Bolt", "Choke Bolt", "Dragon Bolt"];
   if (name.includes("Crossbow")) return ["Shot Bolt", "Explosive Bolt", "Steel Bolt"];
   if (name.includes("Bomb Lance") || name.includes("Bomb Launcher")) return ["Steel Ball", "Dragon Breath"];
@@ -246,18 +283,26 @@ function getCustomAmmoForWeapon(weapon) {
 }
 
 function getAmmoDisplay(weapon) {
-  if (!weapon) return "STANDARD";
+  if (!weapon) return { text: "STANDARD", extraCost: 0 };
   
   const customList = getCustomAmmoForWeapon(weapon);
   if (customList.length > 0 && Math.random() < 0.5) {
     const chosenCustom = getRandomItem(customList);
-    return `${weapon.type ? weapon.type.toUpperCase() : "SPECIAL"} (${chosenCustom})`;
+    const ammoPrice = CUSTOM_AMMO_PRICES[chosenCustom] || 50;
+
+    return {
+      text: `${weapon.type ? weapon.type.toUpperCase() : "SPECIAL"} (${chosenCustom})`,
+      extraCost: ammoPrice
+    };
   }
   
-  return weapon.type ? weapon.type.toUpperCase() : "STANDARD";
+  return {
+    text: weapon.type ? weapon.type.toUpperCase() : "STANDARD",
+    extraCost: 0
+  };
 }
 
-// --- LOGIC ---
+// ==================== CORE LOGIC ====================
 function toggleQuartermaster() {
   quartermaster = !quartermaster;
   const qmBtn = document.getElementById("qm-btn");
@@ -283,6 +328,7 @@ function toggleOnlyWeapons() {
   if (equipmentSection && hasRolledOnce) {
     equipmentSection.classList.toggle("hidden", onlyWeapons);
   }
+  if (hasRolledOnce) rollAllAnimated();
 }
 
 function rollWeapons() {
@@ -351,7 +397,9 @@ function rollWeapons() {
 }
 
 function rollGear() {
-  if (onlyWeapons) return;
+  if (onlyWeapons) return 0;
+
+  let totalGearCost = 0;
 
   const selectedGear = [
     { item: getRandomItem(MELEE_TOOLS), type: "Melee Tool" },
@@ -367,28 +415,42 @@ function rollGear() {
   selectedGear.forEach((gear, index) => {
     const gearElem = document.getElementById(`gear-${index}`);
     const typeElem = document.getElementById(`gear-${index}-type`);
+    const priceElem = document.getElementById(`gear-${index}-price`);
+    const itemPrice = GEAR_PRICES[gear.item] || 0;
+    totalGearCost += itemPrice;
+
     if (gearElem) gearElem.textContent = gear.item;
     if (typeElem) typeElem.textContent = gear.type;
+    if (priceElem) priceElem.textContent = formatPrice(itemPrice);
   });
+
+  return totalGearCost;
 }
 
 function rollAll() {
-  rollWeapons();
-  rollGear();
+  const weaponCost = rollWeapons();
+  const gearCost = rollGear();
+  const currentTotalCost = weaponCost + gearCost;
+
+  const totalCostElem = document.getElementById("total-cost");
+  if (totalCostElem) {
+    totalCostElem.textContent = formatPrice(currentTotalCost);
+  }
 }
 
-// --- RULLNINGSANIMATION (SLOT MACHINE) ---
+// ==================== ANIMATION ====================
 function rollAllAnimated() {
   if (isRolling) return;
   isRolling = true;
 
-  // Gör sektionerna synliga vid första rullningen
   if (!hasRolledOnce) {
     hasRolledOnce = true;
     const weaponsSection = document.getElementById("weapons-section");
     const equipmentSection = document.getElementById("equipment-section");
+    const costDisplay = document.getElementById("cost-display");
     if (weaponsSection) weaponsSection.classList.remove("hidden");
     if (equipmentSection && !onlyWeapons) equipmentSection.classList.remove("hidden");
+    if (costDisplay) costDisplay.classList.remove("hidden");
   }
 
   const rollBtn = document.getElementById("roll-btn");
@@ -415,7 +477,7 @@ function rollAllAnimated() {
   }, intervalTime);
 }
 
-// --- INIT & EVENT LISTENERS ---
+// ==================== INIT ====================
 function init() {
   const rollBtn = document.getElementById("roll-btn");
   const qmBtn = document.getElementById("qm-btn");
