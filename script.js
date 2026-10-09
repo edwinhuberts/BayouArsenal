@@ -417,32 +417,45 @@ function rollWeapons() {
   return totalWeaponCost;
 }
 
-function rollGear() {
+function rollGear(remainingBudget) {
   if (onlyWeapons) return 0;
 
   let totalGearCost = 0;
 
-  const selectedGear = [
-    { item: getRandomItem(MELEE_TOOLS), type: "Melee Tool" },
-    { item: getRandomItem(MEDICAL_TOOLS), type: "Medical Tool" },
-    { item: getRandomItem(OTHER_TOOLS), type: "Support Tool" },
-    { item: getRandomItem(OTHER_TOOLS), type: "Support Tool" },
-    { item: getRandomItem(CONSUMABLES), type: "Consumable" },
-    { item: getRandomItem(CONSUMABLES), type: "Consumable" },
-    { item: getRandomItem(CONSUMABLES), type: "Consumable" },
-    { item: getRandomItem(CONSUMABLES), type: "Consumable" }
+  // Samla alla möjliga kategorier i ordning
+  const gearSlots = [
+    { type: "Melee Tool", pool: MELEE_TOOLS },
+    { type: "Medical Tool", pool: MEDICAL_TOOLS },
+    { type: "Support Tool", pool: OTHER_TOOLS },
+    { type: "Support Tool", pool: OTHER_TOOLS },
+    { type: "Consumable", pool: CONSUMABLES },
+    { type: "Consumable", pool: CONSUMABLES },
+    { type: "Consumable", pool: CONSUMABLES },
+    { type: "Consumable", pool: CONSUMABLES }
   ];
 
-  selectedGear.forEach((gear, index) => {
+  gearSlots.forEach((slot, index) => {
     const gearElem = document.getElementById(`gear-${index}`);
     const typeElem = document.getElementById(`gear-${index}-type`);
     const priceElem = document.getElementById(`gear-${index}-price`);
-    const itemPrice = GEAR_PRICES[gear.item] || 0;
-    totalGearCost += itemPrice;
 
-    if (gearElem) gearElem.textContent = gear.item;
-    if (typeElem) typeElem.textContent = gear.type;
-    if (priceElem) priceElem.textContent = formatPrice(itemPrice);
+    // Filtrera fram prylar i poolen som faktiskt ryms i kvarvarande budget
+    const affordableItems = slot.pool.filter(item => (GEAR_PRICES[item] || 0) <= (remainingBudget - totalGearCost));
+
+    if (affordableItems.length > 0) {
+      const pickedItem = getRandomItem(affordableItems);
+      const itemPrice = GEAR_PRICES[pickedItem] || 0;
+      totalGearCost += itemPrice;
+
+      if (gearElem) gearElem.textContent = pickedItem;
+      if (typeElem) typeElem.textContent = slot.type;
+      if (priceElem) priceElem.textContent = formatPrice(itemPrice);
+    } else {
+      // Om pengarna tog slut för denna slot
+      if (gearElem) gearElem.textContent = "Empty";
+      if (typeElem) typeElem.textContent = slot.type;
+      if (priceElem) priceElem.textContent = "$0";
+    }
   });
 
   return totalGearCost;
@@ -450,18 +463,44 @@ function rollGear() {
 
 function rollAll() {
   let weaponCost = 0;
-  let gearCost = 0;
-  let currentTotalCost = 0;
   let attempts = 0;
 
-  // Snurra tills vi hittar en loadout som håller sig inom maxBudget (max 100 försök)
+  // 1. Slumpa vapen som ryms inom maxBudget (testa max 100 ggr)
   do {
     weaponCost = rollWeapons();
-    gearCost = rollGear();
-    currentTotalCost = weaponCost + gearCost;
     attempts++;
-  } while (currentTotalCost > maxBudget && attempts < 100);
+  } while (weaponCost > maxBudget && attempts < 100);
 
+  // Om inget vapen ryms (t.ex. vid extremt låg budget), tvinga fram det billigaste ($24 Nagant)
+  if (weaponCost > maxBudget) {
+    const cheapWeapon = weapons.find(w => w.name === "Nagant M1895") || weapons[0];
+    weaponCost = cheapWeapon.cost;
+
+    const pName = document.getElementById("primary-name");
+    const pSlot = document.getElementById("primary-slot");
+    const pAmmo = document.getElementById("primary-ammo");
+    const pCost = document.getElementById("primary-cost");
+    if (pName) pName.textContent = cheapWeapon.name;
+    if (pSlot) pSlot.textContent = `${cheapWeapon.slot}-SLOT`;
+    if (pAmmo) pAmmo.textContent = "COMPACT";
+    if (pCost) pCost.textContent = formatPrice(cheapWeapon.cost);
+
+    // Töm secondary
+    const sName = document.getElementById("secondary-name");
+    const sSlot = document.getElementById("secondary-slot");
+    const sAmmo = document.getElementById("secondary-ammo");
+    const sCost = document.getElementById("secondary-cost");
+    if (sName) sName.textContent = "None";
+    if (sSlot) sSlot.textContent = "0-SLOT";
+    if (sAmmo) sAmmo.textContent = "-";
+    if (sCost) sCost.textContent = "$0";
+  }
+
+  // 2. Fyll på med gear för pengarna som finns kvar!
+  const remainingBudget = maxBudget - weaponCost;
+  const gearCost = rollGear(remainingBudget);
+
+  const currentTotalCost = weaponCost + gearCost;
   const totalCostElem = document.getElementById("total-cost");
   if (totalCostElem) {
     totalCostElem.textContent = formatPrice(currentTotalCost);
