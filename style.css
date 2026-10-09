@@ -30,7 +30,7 @@ h2, h3, .hunt-font {
 
 /* --- GLÖDEFFEKTER --- */
 
-/* Huvudtitel: Bayou Arsenal (Varm bärnsten/guld-glöd med puls) */
+/* Huvudtitel: Bayou Roulette (Varm bärnsten/guld-glöd med puls) */
 .glow-main {
   color: #fef08a;
   text-shadow: 
@@ -51,7 +51,7 @@ h2, h3, .hunt-font {
     0 0 30px rgba(0, 0, 0, 0.9);
 }
 
-/* Subtil glöd för kort-titlar och klicka-knappar */
+/* Subtil glöd för kort-titlar och knappar */
 .glow-accent {
   text-shadow: 
     0 0 8px rgba(245, 158, 11, 0.6),
@@ -110,6 +110,7 @@ h2, h3, .hunt-font {
 .btn-hunt:active {
   transform: translateY(1px);
 }
+
 /* --- SLOT MACHINE / ROLL-EFFEKT --- */
 
 /* Gör att texten blinkar/snurrar med oskärpa under rullningen */
@@ -122,13 +123,14 @@ h2, h3, .hunt-font {
   transition: all 0.05s ease-in-out;
 }
 
-/* Liten skakning/pulsering på alla kort medan det rullar */
-.rolling .bg-neutral-800\/80,
-.rolling .bg-neutral-900\/60 {
+/* Liten skakning/pulsering på alla kort medan det rullar (Anpassat för zinc-klasser) */
+.rolling .bg-zinc-900\/40,
+.rolling .bg-zinc-900\/30 {
   transform: scale(0.99);
   border-color: rgba(245, 158, 11, 0.4); /* Bärnstensfärgad glöd */
   transition: all 0.05s ease-in-out;
 }
+
 /* Custom Styling för Slidern */
 #budget-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
