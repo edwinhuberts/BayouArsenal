@@ -236,6 +236,7 @@ const CONSUMABLES = [
 ];
 
 // ==================== STATE ====================
+let allowScarce = true;
 let maxBudget = 2000;
 let quartermaster = false;
 let onlyWeapons = false;
@@ -338,6 +339,18 @@ function toggleQuartermaster() {
   if (hasRolledOnce) rollAllAnimated();
 }
 
+function toggleScarce() {
+  allowScarce = !allowScarce;
+  const scarceBtn = document.getElementById("scarce-btn");
+  if (scarceBtn) {
+    scarceBtn.textContent = `Scarce Weapons: ${allowScarce ? "ON" : "OFF"}`;
+    scarceBtn.classList.toggle("bg-amber-500/20", allowScarce);
+    scarceBtn.classList.toggle("border-amber-500/60", allowScarce);
+    scarceBtn.classList.toggle("text-amber-400", allowScarce);
+  }
+  if (hasRolledOnce) rollAllAnimated();
+}
+
 function toggleOnlyWeapons() {
   onlyWeapons = !onlyWeapons;
   const weaponsBtn = document.getElementById("weapons-btn");
@@ -358,8 +371,11 @@ function rollWeapons() {
   const maxSlots = quartermaster ? 6 : 5;
   let totalWeaponCost = 0;
   
-  const validPrimaries = weapons.filter(w => w.slot <= maxSlots - 1);
-  let rawPrimary = getRandomItem(validPrimaries) || weapons[0];
+  // Filtrera bort Scarce-vapen ($0) om allowScarce är false
+  const availableWeapons = allowScarce ? weapons : weapons.filter(w => w.cost > 0);
+
+  const validPrimaries = availableWeapons.filter(w => w.slot <= maxSlots - 1);
+  let rawPrimary = getRandomItem(validPrimaries) || availableWeapons[0];
   let primary = { ...rawPrimary };
 
   let isPrimaryPair = false;
@@ -374,8 +390,10 @@ function rollWeapons() {
   totalWeaponCost += primaryCost;
 
   let availableSlotsForSecondary = maxSlots - primary.slot;
-  let validSecondaries = weapons.filter(w => w.slot <= availableSlotsForSecondary);
-  let rawSecondary = validSecondaries.length > 0 ? getRandomItem(validSecondaries) : getRandomItem(weapons.filter(w => w.slot === 1));
+  let validSecondaries = availableWeapons.filter(w => w.slot <= availableSlotsForSecondary);
+  let rawSecondary = validSecondaries.length > 0 
+    ? getRandomItem(validSecondaries) 
+    : getRandomItem(availableWeapons.filter(w => w.slot === 1));
   let secondary = { ...rawSecondary };
 
   let isSecondaryPair = false;
@@ -559,9 +577,15 @@ function init() {
   const rollBtn = document.getElementById("roll-btn");
   const qmBtn = document.getElementById("qm-btn");
   const weaponsBtn = document.getElementById("weapons-btn");
+  const scarceBtn = document.getElementById("scarce-btn");
   const yearElem = document.getElementById("year");
 
-  // Budget Slider Event Listener
+  // Markera scarce-knappen aktiv från start om allowScarce är true
+  if (scarceBtn && allowScarce) {
+    scarceBtn.classList.add("bg-amber-500/20", "border-amber-500/60", "text-amber-400");
+  }
+
+  // Budget Slider
   const budgetSlider = document.getElementById("budget-slider");
   const budgetValue = document.getElementById("budget-value");
 
@@ -575,6 +599,7 @@ function init() {
   if (rollBtn) rollBtn.addEventListener("click", rollAllAnimated);
   if (qmBtn) qmBtn.addEventListener("click", toggleQuartermaster);
   if (weaponsBtn) weaponsBtn.addEventListener("click", toggleOnlyWeapons);
+  if (scarceBtn) scarceBtn.addEventListener("click", toggleScarce);
   if (yearElem) yearElem.textContent = new Date().getFullYear();
 }
 
