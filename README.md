@@ -7,7 +7,7 @@
 ## 🌐 Live Demo
 
 Try it online:  
-👉 [https://edwinhuberts.github.io/BayouArsenal/](https://edwinhuberts.github.io/BayouArsenal/)
+👉 [https://edwinhuberts.github.io/BayouRoulette/](https://edwinhuberts.github.io/BayouRoulette/)
 
 ---
 
