@@ -287,44 +287,67 @@ function toggleOnlyWeapons() {
 
 function rollWeapons() {
   const maxSlots = quartermaster ? 6 : 5;
+  let totalWeaponCost = 0;
   
   const validPrimaries = weapons.filter(w => w.slot <= maxSlots - 1);
   let rawPrimary = getRandomItem(validPrimaries) || weapons[0];
   let primary = { ...rawPrimary };
 
+  let isPrimaryPair = false;
   if (canBeDualWielded(primary) && (maxSlots - 2 >= 1) && Math.random() < 0.3) {
     primary.name = `${primary.name} (Pair)`;
     primary.slot = 2;
+    isPrimaryPair = true;
   }
   
+  let primaryCost = isPrimaryPair ? primary.cost * 2 : primary.cost;
+  const primaryAmmo = getAmmoDisplay(primary);
+  primaryCost += primaryAmmo.extraCost;
+  totalWeaponCost += primaryCost;
+
   let availableSlotsForSecondary = maxSlots - primary.slot;
   let validSecondaries = weapons.filter(w => w.slot <= availableSlotsForSecondary);
   let rawSecondary = validSecondaries.length > 0 ? getRandomItem(validSecondaries) : getRandomItem(weapons.filter(w => w.slot === 1));
   let secondary = { ...rawSecondary };
 
+  let isSecondaryPair = false;
   if (canBeDualWielded(secondary) && availableSlotsForSecondary >= 2 && Math.random() < 0.3) {
     secondary.name = `${secondary.name} (Pair)`;
     secondary.slot = 2;
+    isSecondaryPair = true;
   }
 
+  let secondaryCost = isSecondaryPair ? secondary.cost * 2 : secondary.cost;
+  const secondaryAmmo = getAmmoDisplay(secondary);
+  secondaryCost += secondaryAmmo.extraCost;
+  totalWeaponCost += secondaryCost;
+
+  // Render Primary
   const pName = document.getElementById("primary-name");
   const pSlot = document.getElementById("primary-slot");
   const pAmmo = document.getElementById("primary-ammo");
+  const pCost = document.getElementById("primary-cost");
   if (pName) pName.textContent = primary.name;
   if (pSlot) pSlot.textContent = `${primary.slot}-SLOT`;
-  if (pAmmo) pAmmo.textContent = getAmmoDisplay(primary);
+  if (pAmmo) pAmmo.textContent = primaryAmmo.text;
+  if (pCost) pCost.textContent = formatPrice(primaryCost);
 
+  // Render Secondary
   const sName = document.getElementById("secondary-name");
   const sSlot = document.getElementById("secondary-slot");
   const sAmmo = document.getElementById("secondary-ammo");
+  const sCost = document.getElementById("secondary-cost");
   if (sName) sName.textContent = secondary.name;
   if (sSlot) sSlot.textContent = `${secondary.slot}-SLOT`;
-  if (sAmmo) sAmmo.textContent = getAmmoDisplay(secondary);
+  if (sAmmo) sAmmo.textContent = secondaryAmmo.text;
+  if (sCost) sCost.textContent = formatPrice(secondaryCost);
 
   const slotCounter = document.getElementById("slot-counter");
   if (slotCounter) {
     slotCounter.textContent = `${primary.slot + secondary.slot} / ${maxSlots}`;
   }
+
+  return totalWeaponCost;
 }
 
 function rollGear() {
