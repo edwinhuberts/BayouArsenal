@@ -236,6 +236,7 @@ const CONSUMABLES = [
 ];
 
 // ==================== STATE ====================
+let maxBudget = 2000;
 let quartermaster = false;
 let onlyWeapons = false;
 let isRolling = false;
@@ -448,9 +449,18 @@ function rollGear() {
 }
 
 function rollAll() {
-  const weaponCost = rollWeapons();
-  const gearCost = rollGear();
-  const currentTotalCost = weaponCost + gearCost;
+  let weaponCost = 0;
+  let gearCost = 0;
+  let currentTotalCost = 0;
+  let attempts = 0;
+
+  // Snurra tills vi hittar en loadout som håller sig inom maxBudget (max 100 försök)
+  do {
+    weaponCost = rollWeapons();
+    gearCost = rollGear();
+    currentTotalCost = weaponCost + gearCost;
+    attempts++;
+  } while (currentTotalCost > maxBudget && attempts < 100);
 
   const totalCostElem = document.getElementById("total-cost");
   if (totalCostElem) {
@@ -503,6 +513,17 @@ function init() {
   const qmBtn = document.getElementById("qm-btn");
   const weaponsBtn = document.getElementById("weapons-btn");
   const yearElem = document.getElementById("year");
+
+  // Budget Slider Event Listener
+  const budgetSlider = document.getElementById("budget-slider");
+  const budgetValue = document.getElementById("budget-value");
+
+  if (budgetSlider && budgetValue) {
+    budgetSlider.addEventListener("input", (e) => {
+      maxBudget = parseInt(e.target.value, 10);
+      budgetValue.textContent = `$${maxBudget}`;
+    });
+  }
 
   if (rollBtn) rollBtn.addEventListener("click", rollAllAnimated);
   if (qmBtn) qmBtn.addEventListener("click", toggleQuartermaster);
