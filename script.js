@@ -177,6 +177,11 @@ function getRandomItem(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
+// Hjälpfunktion för att formattera priset snyggt (visar SCARCE om priset är 0)
+function formatPrice(cost) {
+  return cost === 0 ? "SCARCE" : `$${cost}`;
+}
+
 function canBeDualWielded(weapon) {
   if (!weapon || weapon.slot !== 1) return false;
   const nonDualWieldable = ["Baseball Bat", "Cavalry Saber", "Machete", "Hand Crossbow"];
