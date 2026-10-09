@@ -422,32 +422,30 @@ function rollGear(remainingBudget) {
 
   let totalGearCost = 0;
 
-  // Om budgeten är under $200 prioriterar vi First Aid Kit först!
-  // Annars kör vi standard ordning (Melee Tool först).
-  const gearSlots = maxBudget < 200 ? [
-    { type: "Medical Tool", pool: MEDICAL_TOOLS }, // Prio 1 vid låg budget
-    { type: "Melee Tool", pool: MELEE_TOOLS },
-    { type: "Support Tool", pool: OTHER_TOOLS },
-    { type: "Support Tool", pool: OTHER_TOOLS },
-    { type: "Consumable", pool: CONSUMABLES },
-    { type: "Consumable", pool: CONSUMABLES },
-    { type: "Consumable", pool: CONSUMABLES },
-    { type: "Consumable", pool: CONSUMABLES }
-  ] : [
-    { type: "Melee Tool", pool: MELEE_TOOLS },      // Normal ordning
-    { type: "Medical Tool", pool: MEDICAL_TOOLS },
-    { type: "Support Tool", pool: OTHER_TOOLS },
-    { type: "Support Tool", pool: OTHER_TOOLS },
-    { type: "Consumable", pool: CONSUMABLES },
-    { type: "Consumable", pool: CONSUMABLES },
-    { type: "Consumable", pool: CONSUMABLES },
-    { type: "Consumable", pool: CONSUMABLES }
+  // Lista över alla 8 gear-slots med sina fasta index i UI
+  const gearSlots = [
+    { index: 0, type: "Melee Tool", pool: MELEE_TOOLS },
+    { index: 1, type: "Medical Tool", pool: MEDICAL_TOOLS },
+    { index: 2, type: "Support Tool", pool: OTHER_TOOLS },
+    { index: 3, type: "Support Tool", pool: OTHER_TOOLS },
+    { index: 4, type: "Consumable", pool: CONSUMABLES },
+    { index: 5, type: "Consumable", pool: CONSUMABLES },
+    { index: 6, type: "Consumable", pool: CONSUMABLES },
+    { index: 7, type: "Consumable", pool: CONSUMABLES }
   ];
 
-  gearSlots.forEach((slot, index) => {
-    const gearElem = document.getElementById(`gear-${index}`);
-    const typeElem = document.getElementById(`gear-${index}-type`);
-    const priceElem = document.getElementById(`gear-${index}-price`);
+  // Om budgeten är under $200 prioriterar vi att behandla slot 1 (Medical) först av alla!
+  let processOrder = [0, 1, 2, 3, 4, 5, 6, 7];
+  if (maxBudget < 200) {
+    processOrder = [1, 0, 2, 3, 4, 5, 6, 7]; // Kör Medical (index 1) först!
+  }
+
+  // Kör igenom i prioritetsordning
+  processOrder.forEach(slotIndex => {
+    const slot = gearSlots[slotIndex];
+    const gearElem = document.getElementById(`gear-${slot.index}`);
+    const typeElem = document.getElementById(`gear-${slot.index}-type`);
+    const priceElem = document.getElementById(`gear-${slot.index}-price`);
 
     // Filtrera fram prylar i poolen som faktiskt ryms i kvarvarande budget
     const affordableItems = slot.pool.filter(item => (GEAR_PRICES[item] || 0) <= (remainingBudget - totalGearCost));
@@ -461,7 +459,7 @@ function rollGear(remainingBudget) {
       if (typeElem) typeElem.textContent = slot.type;
       if (priceElem) priceElem.textContent = formatPrice(itemPrice);
     } else {
-      // Om pengarna tog slut för denna slot
+      // Om pengarna inte räckte till denna ruta
       if (gearElem) gearElem.textContent = "Empty";
       if (typeElem) typeElem.textContent = slot.type;
       if (priceElem) priceElem.textContent = "$0";
