@@ -422,16 +422,26 @@ function rollGear(remainingBudget) {
 
   let totalGearCost = 0;
 
-  // Ordning på slots där First Aid Kit (Medical Tool) prioriteras direkt!
-  const gearSlots = [
-    { type: "Medical Tool", pool: MEDICAL_TOOLS }, // 1. Förstaklass: Medical (First Aid Kit)
-    { type: "Melee Tool", pool: MELEE_TOOLS },      // 2. Närstrid (Knife/Duster/etc)
-    { type: "Support Tool", pool: OTHER_TOOLS },     // 3. Support Tool 1
-    { type: "Support Tool", pool: OTHER_TOOLS },     // 4. Support Tool 2
-    { type: "Consumable", pool: CONSUMABLES },      // 5. Consumable 1
-    { type: "Consumable", pool: CONSUMABLES },      // 6. Consumable 2
-    { type: "Consumable", pool: CONSUMABLES },      // 7. Consumable 3
-    { type: "Consumable", pool: CONSUMABLES }       // 8. Consumable 4
+  // Om budgeten är under $200 prioriterar vi First Aid Kit först!
+  // Annars kör vi standard ordning (Melee Tool först).
+  const gearSlots = maxBudget < 200 ? [
+    { type: "Medical Tool", pool: MEDICAL_TOOLS }, // Prio 1 vid låg budget
+    { type: "Melee Tool", pool: MELEE_TOOLS },
+    { type: "Support Tool", pool: OTHER_TOOLS },
+    { type: "Support Tool", pool: OTHER_TOOLS },
+    { type: "Consumable", pool: CONSUMABLES },
+    { type: "Consumable", pool: CONSUMABLES },
+    { type: "Consumable", pool: CONSUMABLES },
+    { type: "Consumable", pool: CONSUMABLES }
+  ] : [
+    { type: "Melee Tool", pool: MELEE_TOOLS },      // Normal ordning
+    { type: "Medical Tool", pool: MEDICAL_TOOLS },
+    { type: "Support Tool", pool: OTHER_TOOLS },
+    { type: "Support Tool", pool: OTHER_TOOLS },
+    { type: "Consumable", pool: CONSUMABLES },
+    { type: "Consumable", pool: CONSUMABLES },
+    { type: "Consumable", pool: CONSUMABLES },
+    { type: "Consumable", pool: CONSUMABLES }
   ];
 
   gearSlots.forEach((slot, index) => {
