@@ -160,54 +160,80 @@ const weapons = [
   { name: "Sparks Pistol Silencer", slot: 1, type: "long", cost: 178 }
 ];
 
-// Pristabell för Utrustning
+// Pristabell för Tools och Consumables
 const GEAR_PRICES = {
-  "Knuckle Knife": 50, "Duster": 15, "Knife": 30, "Heavy Knife": 40,
-  "Throwing Knives": 40, "Throwing Axes": 60, "Throwing Spear": 120,
-  "First Aid Kit": 30, "Flare Pistol": 36, "Fusees": 10, "Alert Trip Mines": 30,
-  "Concertina Trip Mines": 90, "Poison Trip Mines": 60, "Decoys": 10,
-  "Blank Fire Decoys": 45, "Choke Bombs": 90, "Spyglass": 8,
-  "Weak Vitality Shot": 40, "Vitality Shot": 85, "Weak Stamina Shot": 40,
-  "Stamina Shot": 100, "Weak Antidote Shot": 30, "Antidote Shot": 55,
-  "Regeneration Shot": 110, "Dynamite Stick": 18, "Waxed Dynamite Stick": 24,
-  "Dynamite Bundle": 75, "Big Dynamite Bundle": 110, "Frag Bomb": 103,
-  "Liquid Fire Bomb": 35, "Fire Bomb": 30, "Hellfire Bomb": 70,
-  "Poison Bomb": 25, "Flash Bomb": 47, "Concertina Bomb": 48,
-  "Sticky Bomb": 64, "Ammo Box": 115, "Tool Box": 70,
-  "Beetle (Stalker)": 45, "Beetle (Fire)": 45
+  // Tools
+  "Knife": 40,
+  "Heavy Knife": 20,
+  "Duster": 30,
+  "Knuckle Knife": 50,
+  "Throwing Knives": 40,
+  "Throwing Axes": 80,
+  "Throwing Spear": 145,
+  "First Aid Kit": 30,
+  "Flare Pistol": 36,
+  "Fusees": 10,
+  "Choke Bombs": 25,
+  "Spyglass": 8,
+  "Quad Derringer": 30,
+  "Pennyshot Derringer": 100,
+  "Alert Trip Mines": 30,
+  "Concertina Trip Mines": 90,
+  "Poison Trip Mines": 30,
+  "Decoys": 6,
+  "Blank Fire Decoys": 45,
+  "Decoy Fuses": 15,
+
+  // Consumables
+  "Weak Vitality Shot": 20,
+  "Vitality Shot": 85,
+  "Weak Stamina Shot": 60,
+  "Stamina Shot": 100,
+  "Weak Antidote Shot": 30,
+  "Antidote Shot": 55,
+  "Weak Regeneration Shot": 40,
+  "Regeneration Shot": 105,
+  "Dynamite Stick": 18,
+  "Waxed Dynamite Stick": 24,
+  "Dynamite Bundle": 75,
+  "Big Dynamite Bundle": 110,
+  "Frag Bomb": 103,
+  "Sticky Bomb": 64,
+  "Fire Bomb": 30,
+  "Liquid Fire Bomb": 35,
+  "Hellfire Bomb": 70,
+  "Poison Bomb": 25,
+  "Concertina Bomb": 48,
+  "Flash Bomb": 25,
+  "Ammo Box": 65,
+  "Tool Box": 25,
+  "Stalker Beetle": 45,
+  "Fire Beetle": 57,
+  "Choke Beetle": 22
 };
 
-// Pristabell för Custom Ammo
-const CUSTOM_AMMO_PRICES = {
-  "FMJ Ammo": 50,
-  "Dumdum Ammo": 60,
-  "Bleed (Dumdum) Ammo": 60,
-  "High Velocity Ammo": 50,
-  "Poison Ammo": 40,
-  "Incendiary Ammo": 40,
-  "Subsonic Ammo": 35,
-  "Explosive Ammo": 90,
-  "Spitzer Ammo": 150,
-  "Slug Ammo": 130,
-  "Penny Shot": 25,
-  "Flechette Ammo": 45,
-  "Flechette": 45,
-  "Dragon Breath": 30,
-  "Starshell": 15,
-  "Poison Bolt": 25,
-  "Choke Bolt": 20,
-  "Dragon Bolt": 25,
-  "Shot Bolt": 90,
-  "Explosive Bolt": 90,
-  "Steel Bolt": 15,
-  "Steel Ball": 35,
-  "Dragon Breath": 35,
-};
+const MELEE_TOOLS = [
+  "Knife", "Heavy Knife", "Duster", "Knuckle Knife", "Throwing Knives", "Throwing Axes", "Throwing Spear"
+];
 
-const MELEE_TOOLS = ["Knuckle Knife", "Duster", "Knife", "Heavy Knife", "Throwing Knives", "Throwing Axes", "Throwing Spear"];
-const MEDICAL_TOOLS = ["First Aid Kit"];
-const OTHER_TOOLS = ["Flare Pistol", "Fusees", "Alert Trip Mines", "Concertina Trip Mines", "Poison Trip Mines", "Decoys", "Blank Fire Decoys", "Choke Bombs", "Spyglass"];
-const CONSUMABLES = ["Weak Vitality Shot", "Vitality Shot", "Weak Stamina Shot", "Stamina Shot", "Weak Antidote Shot", "Antidote Shot", "Regeneration Shot", "Dynamite Stick", "Waxed Dynamite Stick", "Dynamite Bundle", "Big Dynamite Bundle", "Frag Bomb", "Liquid Fire Bomb", "Fire Bomb", "Hellfire Bomb", "Poison Bomb", "Flash Bomb", "Concertina Bomb", "Sticky Bomb", "Ammo Box", "Tool Box", "Beetle (Stalker)", "Beetle (Fire)"];
+const MEDICAL_TOOLS = [
+  "First Aid Kit"
+];
+
+const OTHER_TOOLS = [
+  "Flare Pistol", "Fusees", "Choke Bombs", "Spyglass", "Quad Derringer", 
+  "Pennyshot Derringer", "Alert Trip Mines", "Concertina Trip Mines", 
+  "Poison Trip Mines", "Decoys", "Blank Fire Decoys", "Decoy Fuses"
+];
+
+const CONSUMABLES = [
+  "Weak Vitality Shot", "Vitality Shot", "Weak Stamina Shot", "Stamina Shot", 
+  "Weak Antidote Shot", "Antidote Shot", "Weak Regeneration Shot", "Regeneration Shot", 
+  "Dynamite Stick", "Waxed Dynamite Stick", "Dynamite Bundle", "Big Dynamite Bundle", 
+  "Frag Bomb", "Sticky Bomb", "Fire Bomb", "Liquid Fire Bomb", "Hellfire Bomb", 
+  "Poison Bomb", "Concertina Bomb", "Flash Bomb", "Ammo Box", "Tool Box", 
+  "Stalker Beetle", "Fire Beetle", "Choke Beetle"
+];
 
 // ==================== STATE ====================
 let quartermaster = false;
@@ -283,22 +309,18 @@ function getCustomAmmoForWeapon(weapon) {
 }
 
 function getAmmoDisplay(weapon) {
-  if (!weapon) return { text: "STANDARD", extraCost: 0 };
+  if (!weapon) return { text: "STANDARD" };
   
   const customList = getCustomAmmoForWeapon(weapon);
   if (customList.length > 0 && Math.random() < 0.5) {
     const chosenCustom = getRandomItem(customList);
-    const ammoPrice = CUSTOM_AMMO_PRICES[chosenCustom] || 50;
-
     return {
-      text: `${weapon.type ? weapon.type.toUpperCase() : "SPECIAL"} (${chosenCustom})`,
-      extraCost: ammoPrice
+      text: `${weapon.type ? weapon.type.toUpperCase() : "SPECIAL"} (${chosenCustom})`
     };
   }
   
   return {
-    text: weapon.type ? weapon.type.toUpperCase() : "STANDARD",
-    extraCost: 0
+    text: weapon.type ? weapon.type.toUpperCase() : "STANDARD"
   };
 }
 
@@ -348,7 +370,6 @@ function rollWeapons() {
   
   let primaryCost = isPrimaryPair ? primary.cost * 2 : primary.cost;
   const primaryAmmo = getAmmoDisplay(primary);
-  primaryCost += primaryAmmo.extraCost;
   totalWeaponCost += primaryCost;
 
   let availableSlotsForSecondary = maxSlots - primary.slot;
@@ -365,7 +386,6 @@ function rollWeapons() {
 
   let secondaryCost = isSecondaryPair ? secondary.cost * 2 : secondary.cost;
   const secondaryAmmo = getAmmoDisplay(secondary);
-  secondaryCost += secondaryAmmo.extraCost;
   totalWeaponCost += secondaryCost;
 
   // Render Primary
